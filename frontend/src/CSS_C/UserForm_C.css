@@ -1,0 +1,42 @@
+#formStart {
+  width: 50%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+/*Print req form topic*/
+.topicTitle {
+  text-align: center;
+  color: #333;
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: 'Bahnschrift'
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemRow {
+  margin-bottom: 8px;
+}
+
+.GetItemDetails {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}

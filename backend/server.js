@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-//const sampleRoutes = require('./routes/sampleRoutes');
+const ClothsRouter = require('./routes/ClothRouter');
 
 const app = express();
 
@@ -28,6 +28,7 @@ const connectDB = async () => {
 
 connectDB();
 
+app.use('/api', ClothsRouter);
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
