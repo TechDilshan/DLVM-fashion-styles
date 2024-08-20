@@ -15,6 +15,8 @@ import MenCloths from './component_Dila/MenCloths';
 import WomenCloths from './component_Dila/WomenCloths';
 import KidsCloths from './component_Dila/KidsCloths';
 import TailoringUI from './component_Dila/TailoringUI';
+import TailoringDisplay from './component_Dila/TailoringDisplay';
+import TailoringMyOrders from './component_Dila/TailoringMyOrders';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +31,8 @@ root.render(
         <Route path='/WomenCloths' element={<WomenCloths />} />
         <Route path='/KidsCloths' element={<KidsCloths />} />
         <Route path='/TailoringUI' element={<TailoringUI />} />
+        <Route path='/TailoringDisplay' element={<TailoringDisplay />} />
+        <Route path='/TailoringMyOrders' element={<TailoringMyOrders />} />
     </Routes>
   </BrowserRouter>
 );

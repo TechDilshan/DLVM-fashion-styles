@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import StockUpdate_C from './StockUpdate_C';
 import logoImage from '../image/logo.jpg';
+import '../CSS_C/AdminDisplay.css';
 
 //PDF generation - Styles
 const styles = StyleSheet.create({
@@ -306,8 +307,15 @@ const AdminDisplay = ({ rows, selectedUser, deleteUser }) => {
 
                     {/* Buttons for updating and deleting the Selected product */}
                       <TableCell>
-                        <Button onClick={() => handleUpdateButtonClick(row.id)}>Update</Button>
-                        <Button onClick={() => deleteUser({ id: row.id })}>Delete</Button>
+                          <button 
+                            onClick={() => handleUpdateButtonClick(row.id)}
+                            className="admin-update-button">Update
+                          </button>
+
+                          <button 
+                            onClick={() => deleteUser({ id: row.id })}
+                            className="admin-delete-button">Delete
+                          </button>
                       </TableCell>
                     </TableRow>
                   );

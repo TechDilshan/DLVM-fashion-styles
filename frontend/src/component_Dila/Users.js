@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Foot from '../footer';
 import '../CSS_C/navi.css';
 import logo from '../image/logo.jpg';
+import '../CSS_C/Users.css';
 
 const Users = () => {
   // Create useStates
@@ -130,7 +131,7 @@ const Users = () => {
 
   // Start return
   return (
-    <div class="w-calc(100% - 100px) mx-auto mt-2 lg:ml-2 lg:mr-2" style={{ backgroundColor: '#c3ddec' }}>
+    <div class="containerhome">
 
 {/* Product Manager Navigation bar */}
     <div class="menu-body">

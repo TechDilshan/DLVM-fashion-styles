@@ -16,7 +16,7 @@ const CustomTailoringForm = () => {
   const [email, setEmail] = useState('abc@gmail.com');
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('pending');
-  const [tid, setTid] = useState('pending');
+  const [tid, setTid] = useState(10000);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -35,6 +35,7 @@ const CustomTailoringForm = () => {
     };
 
     fetchCountries();
+    fetchMaxIdAndSetId();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -70,6 +71,17 @@ const CustomTailoringForm = () => {
     window.location.reload();
   };
 
+  const fetchMaxIdAndSetId = async () => {
+    try {
+      const response = await Axios.get('http://localhost:3001/api/getmaxidt');
+      const maxId = response.data?.maxId || 10000
+      setTid(maxId + 1);
+
+    } catch (error) {
+      console.error('Axios Error (getmaxidt): ', error);
+    }
+  };
+
   const handleRequestOutfit = async () => {
     const payload = {
       tid: tid,
@@ -84,7 +96,7 @@ const CustomTailoringForm = () => {
     };
     Axios.post('http://localhost:3001/api/createtailoring', payload)
       .then((response) => {
-        console.error('Done');
+        console.log('Done');
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
@@ -99,6 +111,17 @@ const CustomTailoringForm = () => {
     <div className="form-container">
       <h1 className="form-title">Custom Tailoring</h1>
       <form onSubmit={handleSubmit} className="custom-tailoring-form">
+
+        <label htmlFor="country">Custom Tailoring Order ID:</label>
+        <input
+          type="number"
+          id="tid"
+          value={tid}
+          onChange={(e) => setTid(e.target.value)}
+          className="form-input"
+          readOnly
+        />
+
         <label htmlFor="country">Select Your Country:</label>
         <select
           id="country"
