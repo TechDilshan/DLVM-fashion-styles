@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../CSS_C/TailoringUI.css';
 import Navi from '../Navi';
 import Foot from '../footer';
+import Axios from 'axios';
 
 const CustomTailoringForm = () => {
   const [countries, setCountries] = useState([]);
@@ -11,6 +12,11 @@ const CustomTailoringForm = () => {
   const [desiredOutfit, setDesiredOutfit] = useState('');
   const [negativeOutfit, setNegativeOutfit] = useState('');
   const [responseLink, setResponseLink] = useState('');
+  const [qty, setQty] = useState(1);
+  const [email, setEmail] = useState('abc@gmail.com');
+  const [price, setPrice] = useState(0);
+  const [status, setStatus] = useState('pending');
+  const [tid, setTid] = useState('pending');
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -42,7 +48,7 @@ const CustomTailoringForm = () => {
       formData.append('gender', gender);
       formData.append('country', country);
       formData.append('negative', negativeOutfit);
-      formData.append('email', 'zwydywfapvejbontsa@ytnhy.com');
+      formData.append('email', 'rqfhmzpkqyjddphwjo@nbmbb.com');
       formData.append('password', 'abcdef');
 
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
@@ -57,6 +63,32 @@ const CustomTailoringForm = () => {
     } catch (error) {
       console.error('Error submitting form data', error);
     }
+  };
+
+  const handleRegenerate = () => {
+    // Reload the page
+    window.location.reload();
+  };
+
+  const handleRequestOutfit = async () => {
+    const payload = {
+      tid: tid,
+      email: email,
+      responseLink: responseLink,
+      gender: gender,
+      desiredOutfit: desiredOutfit,
+      negativeOutfit: negativeOutfit,
+      qty: qty,
+      price: price,
+      status: status,
+    };
+    Axios.post('http://localhost:3001/api/createtailoring', payload)
+      .then((response) => {
+        console.error('Done');
+      })
+      .catch((error) => {
+        console.error('Axios Error: ', error);
+      });
   };
 
   return (
@@ -136,14 +168,26 @@ const CustomTailoringForm = () => {
           placeholder="Describe what you do not want"
         />
 
+        <label htmlFor="negativeOutfit">Enter Quntity:</label>
+        <input
+          type="number"
+          id="qty"
+          value={qty}
+          onChange={(e) => setQty(e.target.value)}
+          className="form-input"
+          placeholder="Enter Quntity"
+        />
+
         <button type="submit" className="submit-button">Generate Outfit</button>
       </form>
+
+
 
       {/* Picture Box */}
       <div className="picture-box">
           {responseLink ? (
             <div className="picture-container">
-              {/* <img src={responseLink} alt="Generated Outfit" className="outfit-image" /> */}
+              <img src={responseLink} alt="Generated Outfit" className="outfit-image" />
               
             </div>
           ) : (
@@ -154,6 +198,10 @@ const CustomTailoringForm = () => {
         </div>
         
 
+        <div className="button-container">
+          <button onClick={handleRequestOutfit} className="request-button">Request Outfit</button>
+          <button onClick={handleRegenerate} className="regenerate-button">Regenerate</button>
+        </div>
         
     </div>
     <div>

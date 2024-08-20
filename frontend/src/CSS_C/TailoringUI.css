@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 /* Title styling */
@@ -110,4 +111,44 @@
   background-color: #FFFFFF;
   color: #4D4D4D;
   font-size: 16px;
+}
+
+
+/* Container for buttons */
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Request Outfit button styling */
+.request-button {
+  background-color: #4D4D4D;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* Request Outfit button hover effect */
+.request-button:hover {
+  background-color: #333;
+}
+
+/* Regenerate button styling */
+.regenerate-button {
+  background-color: #f39c12;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Regenerate button hover effect */
+.regenerate-button:hover {
+  background-color: #e67e22;
 }

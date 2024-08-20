@@ -7,6 +7,7 @@ dotenv.config();
 
 
 const ClothsRouter = require('./routes/ClothRouter');
+const TailoringRouter = require('./routes/TailoringRouter');
 
 const app = express();
 
@@ -28,7 +29,7 @@ const connectDB = async () => {
 
 connectDB();
 
-app.use('/api', ClothsRouter);
+app.use('/api', ClothsRouter, TailoringRouter);
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
