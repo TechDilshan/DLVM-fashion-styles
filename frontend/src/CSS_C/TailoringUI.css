@@ -1,4 +1,6 @@
-/* Container for form and picture box */
+.tailoring-container {
+  display: flex;
+}
 .form-container {
   display: flex;
   flex-direction: column;
@@ -151,4 +153,67 @@
 /* Regenerate button hover effect */
 .regenerate-button:hover {
   background-color: #e67e22;
+}
+
+
+
+/* BOXX */
+
+.my-orders-box {
+  background: linear-gradient(135deg, #f3f4f6, #ffffff);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 300px;
+  margin: 100px 100px;
+  text-align: center;
+  height: 300px;
+}
+
+.box-content {
+  position: relative;
+}
+
+.user-icon {
+  font-size: 50px;
+  color: #4a90e2;
+}
+
+.box-title {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.box-description {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.view-orders-btn {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.view-orders-btn:hover {
+  background: #357abd;
+}
+
+.box-icon {
+  margin-right: 8px;
+  font-size: 20px;
 }

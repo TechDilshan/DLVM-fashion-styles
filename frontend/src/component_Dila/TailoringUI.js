@@ -4,6 +4,9 @@ import '../CSS_C/TailoringUI.css';
 import Navi from '../Navi';
 import Foot from '../footer';
 import Axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBox, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const CustomTailoringForm = () => {
   const [countries, setCountries] = useState([]);
@@ -17,6 +20,8 @@ const CustomTailoringForm = () => {
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('pending');
   const [tid, setTid] = useState(10000);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -102,135 +107,153 @@ const CustomTailoringForm = () => {
         console.error('Axios Error: ', error);
       });
   };
+  const handleViewOrders = () => {
+    navigate('/TailoringMyOrders');
+  };
 
   return (
     <div>
     <div>
         <Navi/>
       </div>
-    <div className="form-container">
-      <h1 className="form-title">Custom Tailoring</h1>
-      <form onSubmit={handleSubmit} className="custom-tailoring-form">
-
-        <label htmlFor="country">Custom Tailoring Order ID:</label>
-        <input
-          type="number"
-          id="tid"
-          value={tid}
-          onChange={(e) => setTid(e.target.value)}
-          className="form-input"
-          readOnly
-        />
-
-        <label htmlFor="country">Select Your Country:</label>
-        <select
-          id="country"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="form-input"
-          placeholder="Select a country"
-        >
-          <option value="">Select a country</option>
-          {countries.map(({ name, flag }) => (
-            <option key={name} value={name}>
-              <img src={flag} alt={name} className="country-flag" />
-              {name}
-            </option>
-          ))}
-        </select>
-
-        <fieldset className="gender-group">
-          <legend>Select Your Gender:</legend>
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="man"
-              checked={gender === 'man'}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            Male
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="woman"
-              checked={gender === 'woman'}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            Female
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="other"
-              checked={gender === 'other'}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            Other
-          </label>
-        </fieldset>
-
-        <label htmlFor="desiredOutfit">Describe Your Desired Outfit:</label>
-        <textarea
-          id="desiredOutfit"
-          value={desiredOutfit}
-          onChange={(e) => setDesiredOutfit(e.target.value)}
-          className="form-input"
-          placeholder="Describe the outfit you want"
-        />
-
-        <label htmlFor="negativeOutfit">Describe Your Negative Outfit:</label>
-        <textarea
-          id="negativeOutfit"
-          value={negativeOutfit}
-          onChange={(e) => setNegativeOutfit(e.target.value)}
-          className="form-input"
-          placeholder="Describe what you do not want"
-        />
-
-        <label htmlFor="negativeOutfit">Enter Quntity:</label>
-        <input
-          type="number"
-          id="qty"
-          value={qty}
-          onChange={(e) => setQty(e.target.value)}
-          className="form-input"
-          placeholder="Enter Quntity"
-        />
-
-        <button type="submit" className="submit-button">Generate Outfit</button>
-      </form>
-
-
-
-      {/* Picture Box */}
-      <div className="picture-box">
-          {responseLink ? (
-            <div className="picture-container">
-              <img src={responseLink} alt="Generated Outfit" className="outfit-image" />
-              
+      <div className="tailoring-container">
+          <div className="my-orders-box">
+            <div className="box-content">
+              <FontAwesomeIcon icon={faUser} className="user-icon" />
+              <h2 className="box-title">My Orders</h2>
+              <p className="box-description">View and manage your tailoring orders with ease. Check your order status, make changes, and more.</p>
+              <div className="button-container">
+                <button className="view-orders-btn" onClick={handleViewOrders}>
+                  <FontAwesomeIcon icon={faBox} className="box-icon" />
+                  View Orders
+                </button>
+              </div>
             </div>
-          ) : (
-            <div className="empty-message">
-              <p>No image generated yet. Please submit the form to see the result.</p>
-            </div>
-          )}
         </div>
-        
+        <div className="form-container">
+          <h1 className="form-title">Custom Tailoring</h1>
+          <form onSubmit={handleSubmit} className="custom-tailoring-form">
 
-        <div className="button-container">
-          <button onClick={handleRequestOutfit} className="request-button">Request Outfit</button>
-          <button onClick={handleRegenerate} className="regenerate-button">Regenerate</button>
+            <label htmlFor="country">Custom Tailoring Order ID:</label>
+            <input
+              type="number"
+              id="tid"
+              value={tid}
+              onChange={(e) => setTid(e.target.value)}
+              className="form-input"
+              readOnly
+            />
+
+            <label htmlFor="country">Select Your Country:</label>
+            <select
+              id="country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="form-input"
+              placeholder="Select a country"
+            >
+              <option value="">Select a country</option>
+              {countries.map(({ name, flag }) => (
+                <option key={name} value={name}>
+                  <img src={flag} alt={name} className="country-flag" />
+                  {name}
+                </option>
+              ))}
+            </select>
+
+            <fieldset className="gender-group">
+              <legend>Select Your Gender:</legend>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="man"
+                  checked={gender === 'man'}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+                Male
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="woman"
+                  checked={gender === 'woman'}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+                Female
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="other"
+                  checked={gender === 'other'}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+                Other
+              </label>
+            </fieldset>
+
+            <label htmlFor="desiredOutfit">Describe Your Desired Outfit:</label>
+            <textarea
+              id="desiredOutfit"
+              value={desiredOutfit}
+              onChange={(e) => setDesiredOutfit(e.target.value)}
+              className="form-input"
+              placeholder="Describe the outfit you want"
+            />
+
+            <label htmlFor="negativeOutfit">Describe Your Negative Outfit:</label>
+            <textarea
+              id="negativeOutfit"
+              value={negativeOutfit}
+              onChange={(e) => setNegativeOutfit(e.target.value)}
+              className="form-input"
+              placeholder="Describe what you do not want"
+            />
+
+            <label htmlFor="negativeOutfit">Enter Quntity:</label>
+            <input
+              type="number"
+              id="qty"
+              value={qty}
+              onChange={(e) => setQty(e.target.value)}
+              className="form-input"
+              placeholder="Enter Quntity"
+            />
+
+            <button type="submit" className="submit-button">Generate Outfit</button>
+          </form>
+
+
+
+          {/* Picture Box */}
+          <div className="picture-box">
+              {responseLink ? (
+                <div className="picture-container">
+                  <img src={responseLink} alt="Generated Outfit" className="outfit-image" />
+                  
+                </div>
+              ) : (
+                <div className="empty-message">
+                  <p>No image generated yet. Please submit the form to see the result.</p>
+                </div>
+              )}
+            </div>
+            
+
+            <div className="button-container">
+              <button onClick={handleRequestOutfit} className="request-button">Request Outfit</button>
+              <button onClick={handleRegenerate} className="regenerate-button">Regenerate</button>
+            </div>
+            
         </div>
-        
-    </div>
+        </div>
     <div>
         <Foot/>
       </div>
-    </div>
+      </div>
   );
 };
 
