@@ -162,6 +162,10 @@ const MenCloths = () => {
           <div class="cloth-type">Kids & Baby</div>
         </Link>
           <div class="cloth-type cloth-suggesions">Suggesions</div>
+
+        <Link to={`/TailoringUI`}>
+          <div class="cloth-type">Custom Tailoring</div>
+        </Link>
       </div>
 
 

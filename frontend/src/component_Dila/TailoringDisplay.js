@@ -5,6 +5,7 @@ import Navi from '../Navi';
 import Foot from '../footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import logo from '../image/logo.jpg';
 
 const TailoringDisplay = () => {
   const [tailorings, setTailorings] = useState([]);
@@ -39,10 +40,13 @@ const TailoringDisplay = () => {
   };
 
   const deleteOrder = async (id) => {
+    console.log(id);
     try {
       await axios.post('http://localhost:3001/api/deletetailoring', {
-        data: { tid: id }
+        tid:id
+        
       });
+      console.log("sucess");
       setTailorings(prevState => prevState.filter(t => t.tid !== id));
     } catch (error) {
       console.error('Error deleting order:', error);
@@ -73,8 +77,28 @@ const TailoringDisplay = () => {
   };
 
   return (
-    <div>
-      <Navi />
+    <div class="containerhome">
+
+    <div class="menu-body">
+      <nav>
+      <ul class='nav-bar'>
+          <li class='logo'><a href='/users'><img src={logo}/></a></li>
+          <input type='checkbox' id='check' />
+          <span class="menu">
+              <li><a href="/users" class="phone-logo"><img src={logo}/></a></li>
+              <li><a href="/users">Add Product</a></li>
+              <li><a href="/users">Display Product</a></li>
+              <li><a href="/TailoringDisplay">Tailoring Orders <i className="fas fa-user"></i></a></li>
+              <li><a href="/pmprofile">My Account <i className="fas fa-user"></i></a></li>
+              <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
+              <li><a>Logout</a></li>
+          </span>
+          <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
+      </ul>
+      </nav>
+    </div>
+
+      
       <div className="tailoring-display-container">
         <h1 className="display-title">Tailoring Orders</h1>
         <div className="tailoring-grid">

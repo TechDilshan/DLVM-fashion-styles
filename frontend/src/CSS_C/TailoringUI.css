@@ -99,8 +99,8 @@
 }
 
 /* Styling for the generated outfit image */
-.outfit-image {
-  max-width: 600px;
+.outfit-images {
+  width: 600px;
   height: auto;
   border-radius: 8px;
 }

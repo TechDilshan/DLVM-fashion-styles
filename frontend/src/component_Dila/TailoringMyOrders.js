@@ -5,6 +5,7 @@ import Navi from '../Navi';
 import Foot from '../footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'; 
 
 const TailoringDisplay = () => {
   const [tailorings, setTailorings] = useState([]);
@@ -49,7 +50,7 @@ const TailoringDisplay = () => {
   const deleteOrder = async (id) => {
     try {
       await axios.post('http://localhost:3001/api/deletetailoring', {
-        data: { tid: id }
+        tid: id 
       });
       setTailorings(prevState => prevState.filter(t => t.tid !== id));
     } catch (error) {
@@ -83,6 +84,41 @@ const TailoringDisplay = () => {
   return (
     <div>
       <Navi />
+
+      <div class="sub-navi">
+        <div class="search-container">
+          
+          <div class="search-bar-wrapper">
+
+            {/* Search bar input section */}
+            <input
+              type="text"
+              class="search-bar"
+              placeholder="Search items..."
+            />
+          </div>
+        </div>
+
+        <Link to={`/MenCloths`}>
+          <div class="cloth-type">Men</div>
+        </Link>
+
+        <Link to={`/WomenCloths`}>
+          <div class="cloth-type">Women</div>
+        </Link>
+
+        <Link to={`/KidsCloths`}>
+          <div class="cloth-type">Kids & Baby</div>
+        </Link>
+          
+          <div class="cloth-type cloth-suggesions">Suggesions</div>
+
+        <Link to={`/TailoringUI`}>
+          <div class="cloth-type">Custom Tailoring</div>
+        </Link>
+      </div>
+
+
       <div className="tailoring-display-container">
         <h1 className="display-title">Tailoring Orders</h1>
         <div className="tailoring-grid">

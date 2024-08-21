@@ -7,6 +7,8 @@ import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBox, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'; 
+import logo from '../image/logo.jpg';
 
 const CustomTailoringForm = () => {
   const [countries, setCountries] = useState([]);
@@ -54,7 +56,7 @@ const CustomTailoringForm = () => {
       formData.append('gender', gender);
       formData.append('country', country);
       formData.append('negative', negativeOutfit);
-      formData.append('email', 'rqfhmzpkqyjddphwjo@nbmbb.com');
+      formData.append('email', 'kwdsylfcoslgcuciiv@nbmbb.com');
       formData.append('password', 'abcdef');
 
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
@@ -116,6 +118,40 @@ const CustomTailoringForm = () => {
     <div>
         <Navi/>
       </div>
+
+      <div class="sub-navi">
+        <div class="search-container">
+          
+          <div class="search-bar-wrapper">
+
+            {/* Search bar input section */}
+            <input
+              type="text"
+              class="search-bar"
+              placeholder="Search items..."
+            />
+          </div>
+        </div>
+
+        <Link to={`/MenCloths`}>
+          <div class="cloth-type">Men</div>
+        </Link>
+
+        <Link to={`/WomenCloths`}>
+          <div class="cloth-type">Women</div>
+        </Link>
+
+        <Link to={`/KidsCloths`}>
+          <div class="cloth-type">Kids & Baby</div>
+        </Link>
+          
+          <div class="cloth-type cloth-suggesions">Suggesions</div>
+
+        <Link to={`/TailoringUI`}>
+          <div class="cloth-type">Custom Tailoring</div>
+        </Link>
+      </div>
+      
       <div className="tailoring-container">
           <div className="my-orders-box">
             <div className="box-content">
@@ -232,7 +268,7 @@ const CustomTailoringForm = () => {
           <div className="picture-box">
               {responseLink ? (
                 <div className="picture-container">
-                  <img src={responseLink} alt="Generated Outfit" className="outfit-image" />
+                  <img src={responseLink} alt="Generated Outfit" className="outfit-images" />
                   
                 </div>
               ) : (

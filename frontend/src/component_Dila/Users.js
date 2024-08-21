@@ -143,6 +143,7 @@ const Users = () => {
               <li><a href="/users" class="phone-logo"><img src={logo}/></a></li>
               <li><a href="/users">Add Product</a></li>
               <li><a href="#" onClick={handleDisplayButtonClick}>Display Product</a></li>
+              <li><a href="/TailoringDisplay">Tailoring Orders <i className="fas fa-user"></i></a></li>
               <li><a href="/pmprofile">My Account <i className="fas fa-user"></i></a></li>
               <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
               <li><a onClick={handleLogout}>Logout</a></li>
