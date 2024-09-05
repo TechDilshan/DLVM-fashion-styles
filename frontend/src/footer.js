@@ -1,5 +1,6 @@
 import React from 'react';
 import './CSS_C/Footer.css';
+import logo from './image/logo.jpg';
 
 const footer = () => {
 
@@ -9,7 +10,7 @@ const footer = () => {
        <div class="frow">
 
             <div class="fcol">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcLcntdEXIthyj6S09kyTa_1OqjYG5A_U-kfz4TvO0lQ&s" class="flogo" alt='company logo'/>
+                <img src={logo} class="flogo" alt='company logo'/>
                 <p> A Vertual dressing Shop is a retail establishment
 					 that specialization is selling a variety of products related
 					 to cloth needs. </p>

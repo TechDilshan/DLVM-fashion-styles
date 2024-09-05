@@ -41,15 +41,15 @@ const NaviBar = () => {
         <li><a href="/UserHome_C" className="phone-logo"><img src={logo} alt="Logo"/></a></li>
         <li><a href="/UserHome_C">Home</a></li>
         <li><a href="">About Us</a></li>
-        <li><a href="/PrintingOrderMain_D">My orders</a></li>
-        <li><a href="/couponview">Coupons</a></li>
+        <li><a href="">My orders</a></li>
+        <li><a href="">Custom Designs</a></li>
 
         {userEmail && (
-            <li><a href="/shopping-cart"> Cart <i className="fa-solid fa-cart-shopping"></i></a></li>
+            <li><a href="/ShoppingCart"> Cart <i className="fa-solid fa-cart-shopping"></i></a></li>
           )}
 
 {userEmail && (
-            <li><a href="/PurchaseOrder"> Purchase Order</a></li>
+            <li><a href="">Body Measurement</a></li>
           )}
       </span>
       <label htmlFor="check" className="open-menu"><i className="fas fa-bars"></i></label>

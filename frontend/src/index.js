@@ -18,10 +18,22 @@ import TailoringUI from './component_Dila/TailoringUI';
 import TailoringDisplay from './component_Dila/TailoringDisplay';
 import TailoringMyOrders from './component_Dila/TailoringMyOrders';
 
+
+//Limasha
+import ShoppingCart from './component_Lima/ShoppingCart';
+
+
+//Vihanga
+import Login from './component_vihanga/login';
+
+
+//Malmi
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 <BrowserRouter>
     <Routes>
+{/* Component Dilashan */}
         <Route path='/' element={<App />} />
         <Route path='/users' element={<Users />} />
         <Route path='/AdminDisplay' element={<AdminDisplay />} />
@@ -33,6 +45,14 @@ root.render(
         <Route path='/TailoringUI' element={<TailoringUI />} />
         <Route path='/TailoringDisplay' element={<TailoringDisplay />} />
         <Route path='/TailoringMyOrders' element={<TailoringMyOrders />} />
+
+{/* Component Limasha */}
+        <Route path='/ShoppingCart' element={<ShoppingCart />} />
+
+{/* Component Vihanga */}
+        <Route path='/Login' element={<Login />} />
+
+{/* Component Malmi */}
     </Routes>
   </BrowserRouter>
 );

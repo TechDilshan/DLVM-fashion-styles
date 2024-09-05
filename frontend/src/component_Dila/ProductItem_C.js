@@ -7,7 +7,7 @@ import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { FaShoppingCart } from 'react-icons/fa';
 import StockUpdate_C from './StockUpdate_C';
-//import createCart from '../createCart';
+import createCart from '../component_Lima/createCart';
 
 const ProductItem_C = ({ rows }) => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -109,7 +109,7 @@ const ProductItem_C = ({ rows }) => {
                           //pass data for update the product stock 
                           StockUpdate_C({ productId: row.id, qty: quantity, stk: row.stock, type: "add", name: row.name, sdes: row.sdes, price: row.price });
                           //pass data for Create cart
-                          // createCart({ productId: row.id, qty: quantity, stk: row.stock });
+                          createCart({ productId: row.id, qty: quantity, stk: row.stock });
                         }
                       } else {
                         //Display loging message if user not login in the web page
