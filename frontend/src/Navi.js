@@ -15,20 +15,12 @@ const NaviBar = () => {
   }, []);
 
   const handleLogout =()=>{
-    axios.get('http://localhost:5000/auth/logout')
-    .then(res => {
-      if(res.data.status){
-        sessionStorage.removeItem('userEmail');
-
-        //window.location.reload();
-
-       // window.location.reload();
-
-        navigate('/')
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    const confirmLogout = window.confirm("Do you want to Logout?");
+    if(confirmLogout){
+      sessionStorage.setItem('userPosition', 'empty');
+      sessionStorage.clear();
+      navigate('/login');
+    }
   }
 
   return (
