@@ -1,23 +1,23 @@
 /* PaymentListPage.css */
-.payment-list-page {
+.orders {
     padding: 20px;
   }
   
-  .payment-list-page table {
+  .orders table {
     width: 100%;
     border-collapse: collapse;
   }
   
-  .payment-list-page th, .payment-list-page td {
+  .orders th, .orders td {
     border: 1px solid #ddd;
     padding: 8px;
   }
   
-  .payment-list-page th {
+  .orders th {
     background-color: #f4f4f4;
   }
   
-  .payment-list-page button {
+  .orders button {
     margin: 0 5px;
     padding: 5px 10px;
     background-color: #007bff;
@@ -26,6 +26,6 @@
     cursor: pointer;
   }
   
-  .payment-list-page button:hover {
+  .orders button:hover {
     background-color: #0056b3;
   }

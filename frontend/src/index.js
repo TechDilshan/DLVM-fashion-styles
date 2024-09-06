@@ -30,7 +30,7 @@ import Login from './component_vihanga/login';
 
 //Malmi
 import Payment from './component_Malmi/Payment';
-import PaymentList from './component_Malmi/PaymentList';
+import Orders from './component_Malmi/Orders';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -57,7 +57,7 @@ root.render(
 
 {/* Component Malmi */}
 <Route path="/Payment" element={<Payment />} />
-<Route path="/PaymentList" element={<PaymentList />} />
+<Route path="/Orders" element={<Orders />} />
 
     </Routes>
   </BrowserRouter>
