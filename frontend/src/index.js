@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Dashboard from './Dashboard';
 
 //Dilshan
 import Users from './component_Dila/Users';
@@ -36,8 +37,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 <BrowserRouter>
     <Routes>
+        
 {/* Component Dilashan */}
         <Route path='/' element={<App />} />
+        <Route path='/Dashboard' element={<Dashboard />} />
+
         <Route path='/users' element={<Users />} />
         <Route path='/AdminDisplay' element={<AdminDisplay />} />
         <Route path='/UserHome_C' element={<UserHome />} />

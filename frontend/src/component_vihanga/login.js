@@ -11,9 +11,13 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sessionStorage.setItem('userEmail', email);
-    navigate('/UserHome_C');
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    if (email !== 'admin@gmail.com'){
+      navigate('/UserHome_C');
+    }
+    else{
+      navigate('/Dashboard');
+    }
   };
 
   return (

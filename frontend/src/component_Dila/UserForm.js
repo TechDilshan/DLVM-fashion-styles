@@ -225,64 +225,64 @@ const isMobile = useMediaQuery('(max-width:600px)');
             <table style={{ marginLeft: "50px", borderSpacing: "0" }}>
               <tr>
                 <td>
-                  <label htmlFor="bookitem" style={{ marginRight: "10px", display: "block" }}>
-                    Book Item
+                  <label htmlFor="Trending" style={{ marginRight: "10px", display: "block" }}>
+                    Trending
                   </label>
                 </td>
                 <td>
                   <input
                     type="radio"
-                    id="bookitem"
+                    id="Trending"
                     name="item"
-                    value="bookitem"
+                    value="trending"
                     onChange={(e) => setItem(e.target.value)}
                   />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <label htmlFor="schoolitem" style={{ marginRight: "10px" }}>
-                    School Item
+                  <label htmlFor="formen" style={{ marginRight: "10px" }}>
+                    For Men
                   </label>
                 </td>
                 <td>
                   <input
                     type="radio"
-                    id="schoolitem"
+                    id="menitem"
                     name="item"
-                    value="schoolitem"
+                    value="menitem"
                     onChange={(e) => setItem(e.target.value)}
                   />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <label htmlFor="techitem" style={{ marginRight: "10px" }}>
-                    Tech Item
+                  <label htmlFor="forwomen" style={{ marginRight: "10px" }}>
+                    For Women
                   </label>
                 </td>
                 <td>
                   <input
                     type="radio"
-                    id="techitem"
+                    id="womenitem"
                     name="item"
-                    value="techitem"
+                    value="womenitem"
                     onChange={(e) => setItem(e.target.value)}
                   />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <label htmlFor="mobileitem" style={{ marginRight: "10px" }}>
-                    Mobile Item
+                  <label htmlFor="kidsitem" style={{ marginRight: "10px" }}>
+                    For Kids & Baby
                   </label>
                 </td>
                 <td>
                   <input
                     type="radio"
-                    id="mobileitem"
+                    id="kidsitem"
                     name="item"
-                    value="mobileitem"
+                    value="kidsitem"
                     onChange={(e) => setItem(e.target.value)}
                   />
                 </td>
