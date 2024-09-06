@@ -12,6 +12,7 @@ const CartRouter = require('./routes/CartRouter');
 const CustomerRouter = require('./routes/CustomerRouter');
 const PaymentRouter = require('./routes/PaymentRouter');
 
+
 const app = express();
 
 app.use(cors());

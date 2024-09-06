@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useNavigate } from 'react';
 import Axios from 'axios';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import './Orders.css';
@@ -67,6 +67,7 @@ const GenerateReceipt = ({ orders, totalAmount, order }) => (
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch existing payments
@@ -80,7 +81,7 @@ const Orders = () => {
   }, []);
 
   const handleDelete = (id) => {
-    Axios.delete(`http://localhost:3001/api/Payment/${id}`)
+    Axios.delete(`http://localhost:3001/api/PlaceOrder/${id}`)
       .then(() => {
         setOrders(orders.filter(order => order.id !== id));
       })
@@ -90,11 +91,13 @@ const Orders = () => {
   };
 
   const handleUpdate = (id, updatedDetails) => {
-    Axios.put(`http://localhost:3001/api/Payment/${id}`, updatedDetails)
+    Axios.put(`http://localhost:3001/api/EditPlaceOrder/${id}`, updatedDetails)
       .then((response) => {
         setOrders(orders.map(orders => 
           orders.id === id ? response.data : orders
+          
         ));
+        navigate(`/edit-place-order/${id}`);
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
@@ -116,7 +119,10 @@ const Orders = () => {
   <thead>
     <tr>
       <th scope="col">Order ID</th>
-      <th scope="col">Holder Name</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Customer Address</th>
+      <th scope="col">Zip Code</th>
+      <th scope="col">Phone Number</th>
       <th scope="col">Quantity</th>
       <th scope="col">Total Amount</th>
       <th scope="col">Actions</th>
@@ -130,7 +136,7 @@ const Orders = () => {
               <td>{orders.Ouantity}</td>
               <td>LKR. {orders.totalAmount}</td>
               <td>
-                <button type='button' className="btn btn-primary btn-lg"  onClick={() => handleUpdate(orders.id, {})}>Update</button>
+                <button type='button' className="btn btn-primary btn-lg"  onClick={() => handleUpdate(orders.id)}>Update</button>
                 <button type='button' className="btn btn-primary btn-lg"  onClick={() => handleDelete(orders.id)}>Delete</button>
               </td>
             </tr>
