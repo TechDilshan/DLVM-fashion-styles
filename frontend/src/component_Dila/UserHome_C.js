@@ -71,16 +71,16 @@ const UserHome_C = () => {
   }
 
 // Filter Products based on item category
-  const trendingItems = users.filter(user => user.item === 'bookitem');
+  const trendingItems = users.filter(user => user.item === 'trending');
   const visibleTrending = showAllBook ? trendingItems : trendingItems.slice(0, 8);
 
-  const menItems = users.filter(user => user.item === 'schoolitem');
+  const menItems = users.filter(user => user.item === 'menitem');
   const visibleMen = showAll ? menItems : menItems.slice(0, 8);
 
-  const womenItem = users.filter(user => user.item === 'techitem');
+  const womenItem = users.filter(user => user.item === 'womenitem');
   const visibleWomen = showAll ? womenItem : womenItem.slice(0, 8);
 
-  const kidsItem  = users.filter(user => user.item === 'mobileitem');
+  const kidsItem  = users.filter(user => user.item === 'kidsitem');
   const visibleKids = showAll ? kidsItem : kidsItem.slice(0, 8);
 
   const [isOpen, setIsOpen] = useState(false);
