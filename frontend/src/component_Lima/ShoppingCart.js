@@ -230,8 +230,8 @@ const ShoppingCart = () => {
     }
   };
   
-  const handlePayNow = () => {
-    navigate('/Payment');
+  const handlePayNow = (total) => {
+    navigate(`/payment/${total}`)
   };
 
 
@@ -300,7 +300,7 @@ const ShoppingCart = () => {
         <div className="total-amount">Total : LKR.{total}</div>
 
         <div className="pay-now-button-container">
-        <button className="pay-now-button" onClick={handlePayNow}>
+        <button className="pay-now-button" onClick={() => handlePayNow(total)}>
           Pay Now
         </button>
       </div>
