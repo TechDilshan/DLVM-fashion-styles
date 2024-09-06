@@ -50,8 +50,8 @@ const Payment = () => {
           <form onSubmit={handleSubmit}>
           <h4 className='title'>Payment</h4>
           <div className="mb-3">
-             <label htmlFor="userAddress" className="form-label">Enter Your Address</label>
-             <input type="text" name="userAddress" value = {paymentDetails.userAddress} className="form-control form-control-lg"  
+             <label htmlFor="userAmount" className="form-label">Enter Payment Amount</label>
+             <input type="text" name="userAmount" value = {paymentDetails.userAddress} className="form-control form-control-lg"  
               onChange={handleChange} required/>
           </div>
           <div className="mb-3">
