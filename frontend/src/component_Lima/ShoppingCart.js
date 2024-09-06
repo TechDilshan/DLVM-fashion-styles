@@ -8,6 +8,7 @@ import { storage } from "../firebase";
 import StockUpdate_C from '../component_Dila/StockUpdate_C';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import Foot from '../footer';
+import { useNavigate } from 'react-router-dom';
 
 const styles = StyleSheet.create({
   page: {
@@ -84,7 +85,11 @@ const ShoppingCart = () => {
   const [total, setTotal] = useState(0);     
   const [imageUrls, setImageUrls] = useState([]);  
   const [searchQuery, setSearchQuery] = useState('');  
-  const [billVisible, setBillVisible] = useState(false); 
+  const [billVisible, setBillVisible] = useState(false);
+
+  const navigate = useNavigate();
+
+  
 
   
   useEffect(() => {    
@@ -224,12 +229,17 @@ const ShoppingCart = () => {
         StockUpdate_C({ productId: id, qty: 1 , stk: stock, type: "remove", name: name, sdes: sdes, price: price });
     }
   };
+  
+  const handlePayNow = () => {
+    navigate('/Payment');
+  };
 
 
   return (
     <div>
       <div>
         <Navi />
+        
       </div>
       <div className='shopping-cart'>
         <h2 className='cart-title'>Shopping Cart</h2>
@@ -289,10 +299,11 @@ const ShoppingCart = () => {
        
         <div className="total-amount">Total : LKR.{total}</div>
 
-        <div class="pay-now-button-container">
-        <a href="/Shippingscreen">
-          <button class="pay-now-button">Pay Now</button></a>
-        </div>
+        <div className="pay-now-button-container">
+        <button className="pay-now-button" onClick={handlePayNow}>
+          Pay Now
+        </button>
+      </div>
 
       </div>
       <div>

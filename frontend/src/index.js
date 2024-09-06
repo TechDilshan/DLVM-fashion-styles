@@ -19,6 +19,7 @@ import TailoringDisplay from './component_Dila/TailoringDisplay';
 import TailoringMyOrders from './component_Dila/TailoringMyOrders';
 
 
+
 //Limasha
 import ShoppingCart from './component_Lima/ShoppingCart';
 
@@ -28,6 +29,8 @@ import Login from './component_vihanga/login';
 
 
 //Malmi
+import Payment from './component_Malmi/Payment';
+import PaymentList from './component_Malmi/PaymentList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -53,6 +56,9 @@ root.render(
         <Route path='/Login' element={<Login />} />
 
 {/* Component Malmi */}
+<Route path="/Payment" element={<Payment />} />
+<Route path="/PaymentList" element={<PaymentList />} />
+
     </Routes>
   </BrowserRouter>
 );

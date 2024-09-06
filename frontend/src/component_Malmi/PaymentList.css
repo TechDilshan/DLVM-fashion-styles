@@ -1,0 +1,31 @@
+/* PaymentListPage.css */
+.payment-list-page {
+    padding: 20px;
+  }
+  
+  .payment-list-page table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .payment-list-page th, .payment-list-page td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .payment-list-page th {
+    background-color: #f4f4f4;
+  }
+  
+  .payment-list-page button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .payment-list-page button:hover {
+    background-color: #0056b3;
+  }
