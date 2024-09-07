@@ -44,7 +44,7 @@ const getSelectedDelivery = (req, res, next) => {
 
 //Create new Delivery
 const addDelivery = (req, res, next) => {
-    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone } = req.body;
+    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail } = req.body;
 
     const delivery = new Delivery({
         deliveryId: deliveryId,
@@ -52,6 +52,7 @@ const addDelivery = (req, res, next) => {
         deliveryAddress: deliveryAddress,
         zipCode: zipCode,
         deliveryPhone: deliveryPhone,
+        deliveryEmail: deliveryEmail,
     });
 
     delivery.save()
@@ -66,9 +67,9 @@ const addDelivery = (req, res, next) => {
 
 //Update existing CustoDeliverymer
 const updateDelivery = (req, res, next) => {
-    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone } = req.body;
+    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail } = req.body;
     
-    Delivery.updateOne({ deliveryId: deliveryId }, { $set: { deliveryName: deliveryName, deliveryAddress: deliveryAddress, zipCode: zipCode, deliveryPhone: deliveryPhone } })
+    Delivery.updateOne({ deliveryId: deliveryId }, { $set: { deliveryName: deliveryName, deliveryAddress: deliveryAddress, zipCode: zipCode, deliveryPhone: deliveryPhone, deliveryEmail: deliveryEmail } })
         .then(response => {
             res.json({ response })
         })

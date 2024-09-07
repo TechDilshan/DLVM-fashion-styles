@@ -47,7 +47,7 @@ const Login = () => {
         } else {
           if(email === 'admin@gmail.com' && password === 'Admin2024@@'){
             // Save admin email and position in localStorage
-            sessionStorage.setItem('userEmail', email);
+            //sessionStorage.setItem('userEmail', email);
             navigate('/Dashboard');
           }
           else{

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './PlaceOrder.css';
+import Navi from '../Navi';
+import Foot from '../footer'
 
 
 
@@ -35,7 +37,7 @@ const PlaceOrder = () => {
       deliveryAddress: deliveryAddress,
       zipCode: zipCode,
       deliveryPhone: deliveryPhone,
-      deliveryEmail: 'abc@gmail.com'
+      deliveryEmail: 'abc@gmail.com',
     };
     Axios.post('http://localhost:3001/api/create-delivery', payload)
       .then((response) => {
@@ -59,6 +61,7 @@ const PlaceOrder = () => {
 
   return (
          <div className="placeOrder-page">
+          <Navi/>
          
     <div className='form-container'>
           <form onSubmit={handleSubmit}>
@@ -81,7 +84,7 @@ const PlaceOrder = () => {
           </div>
           <div className="mb-3">
              <label htmlFor="phoneNumber" className="form-label">Enter Your Phone Number</label>
-             <input type="String" value = {deliveryPhone} className="form-control form-control-lg" name="phoneNumber" 
+             <input type="text" value = {deliveryPhone} className="form-control form-control-lg" name="phoneNumber" 
              onChange={(e) => setDeliveryPhone(e.target.value)}  maxLength={10} required/>
           </div>
           
@@ -90,6 +93,8 @@ const PlaceOrder = () => {
       </form>
   
         </div>
+
+        <Foot/>
         </div>
 
 

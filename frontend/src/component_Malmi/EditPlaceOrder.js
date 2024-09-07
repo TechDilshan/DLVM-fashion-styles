@@ -1,75 +1,118 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './PlaceOrder.css';
+import Navi from '../Navi';
+import Foot from '../footer'
 
-const EditPlaceOrder = () => {
-  const { orderId } = useParams(); // Assuming you have orderId as a parameter in your route
-  const [orderDetails, setOrderDetails] = useState({
-    userName: '',
-    userAddress: '',
-    zipcode: '',
-    phoneNumber: ''
-  });
-  const navigate = useNavigate();
+
+
+const PlaceOrder = () => {
+  
+
+  const [DeliveryId, setDeliveryId] = useState(0);
+  const [deliveryName, setDeliveryName] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [zipCode, setZipCode] = useState(0);
+  const [deliveryPhone, setDeliveryPhone] = useState('');
+  const [deliveryEmail, setDeliveryEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+
 
   useEffect(() => {
-    // Fetch order details by orderId
-    Axios.get(`http://localhost:3001/api/PlaceOrder/${orderId}`)
+    setUserEmail('abc@gmail.com');
+    DeliveryDetails();
+    
+  }, [userEmail]);
+
+  const DeliveryDetails = async () => {
+    // const email = sessionStorage.getItem('userEmail');
+    // setUserEmail('abc@gmail.com');
+    try {
+      const response = await Axios.get('http://localhost:3001/api/deliveries');
+      const users = response.data.response;
+      const user = users.find((u) => u.deliveryEmail === userEmail);
+      console.log(user);
+      setDeliveryId(user.deliveryId)
+      setDeliveryName(user.deliveryName)
+      setDeliveryAddress(user.deliveryAddress)
+      setZipCode(user.zipCode)
+      setDeliveryPhone(user.deliveryPhone)
+
+    } catch (error) {
+      console.error('Axios Error (getMaxId): ', error);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    console.log(DeliveryId)
+    console.log(deliveryName)
+    console.log(deliveryAddress)
+    console.log(zipCode)
+    console.log(deliveryPhone)
+
+    const payload = {
+      deliveryId: DeliveryId,
+      deliveryName: deliveryName,
+      deliveryAddress: deliveryAddress,
+      zipCode: zipCode,
+      deliveryPhone: deliveryPhone,
+    };
+    Axios.post('http://localhost:3001/api/update-delivery', payload)
       .then((response) => {
-        setOrderDetails(response.data); // Assuming response.data contains order details
+        console.log('Done');
+        //DeliveryDetails();
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
       });
-  }, [orderId]);
 
-  const handleChange = (e) => {
-    setOrderDetails({ ...orderDetails, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = () => {
-    // Update order details
-    Axios.put(`http://localhost:3001/api/PlaceOrder/${orderId}`, orderDetails)
-      .then(() => {
-        navigate('/Payment'); // Redirect to the payment page after update
-      })
-      .catch((error) => {
-        console.error('Axios Error: ', error);
-      });
-  };
+  }
 
   return (
-    <div className="placeOrder-page">
-      <div className='form-container'>
-        <form onSubmit={handleSubmit}>
-          <h4 className='title'>Edit Order</h4>
+         <div className="placeOrder-page">
+          <Navi/>
+         
+    <div className='form-container'>
+          <form onSubmit={handleUpdate}>
+          <h4 className='title'>Delivery Details</h4>
           <div className="mb-3">
-            <label htmlFor="userName" className="form-label">Enter Your Name</label>
-            <input type="text" name="userName" value={orderDetails.userName} className="form-control form-control-lg"
-                   onChange={handleChange} required/>
+             <label htmlFor="userName" className="form-label">Enter Your Name</label>
+             <input type="text" name="userName" value = {deliveryName} className="form-control form-control-lg"  
+              onChange={(e) => setDeliveryName(e.target.value)} required/>
           </div>
           <div className="mb-3">
-            <label htmlFor="userAddress" className="form-label">Enter Your Address</label>
-            <input type="text" value={orderDetails.userAddress} className="form-control form-control-lg"
-                   name="userAddress" onChange={handleChange} required/>
+             <label htmlFor="userAddress" className="form-label">Enter Your Address </label>
+             <input type="text" value = {deliveryAddress} className="form-control form-control-lg" name="userAddress" 
+              onChange={(e) => setDeliveryAddress(e.target.value)} required/>
           </div>
           <div className="mb-3">
-            <label htmlFor="zipcode" className="form-label">Enter zipcode</label>
-            <input type="number" value={orderDetails.zipcode} className="form-control form-control-lg"
-                   name="zipcode" onChange={handleChange} required/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="phoneNumber" className="form-label">Enter Your Phone Number</label>
-            <input type="tel" value={orderDetails.phoneNumber} className="form-control form-control-lg"
-                   name="phoneNumber" onChange={handleChange} maxLength={10} required/>
-          </div>
+             <label htmlFor="zipcode" className="form-label">Enter zipcode </label>
+             <input type="Number" value = {zipCode} className="form-control form-control-lg" name="zipcode" 
+              onChange={(e) => setZipCode(e.target.value)} required/>
 
-          <button type="submit" className="btn btn-primary btn-lg">Update</button>
-        </form>
-      </div>
-    </div>
+          </div>
+          <div className="mb-3">
+             <label htmlFor="phoneNumber" className="form-label">Enter Your Phone Number</label>
+             <input type="text" value = {deliveryPhone} className="form-control form-control-lg" name="phoneNumber" 
+             onChange={(e) => setDeliveryPhone(e.target.value)} required/>
+          </div>
+          
+
+        <button type="submit" className="btn btn-primary btn-lg">Update</button>
+      </form>
+  
+        </div>
+
+        <Foot/>
+        </div>
+
+
+
+
   );
 };
 
-export default EditPlaceOrder;
+export default PlaceOrder;

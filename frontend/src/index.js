@@ -33,7 +33,9 @@ import SignUp from './component_vihanga/signUp'
 //Malmi
 import Payment from './component_Malmi/Payment';
 import Orders from './component_Malmi/Orders';
-import PlaceOrder from './component_Malmi/PlaceOrder'
+import PlaceOrder from './component_Malmi/PlaceOrder';
+import EditPlaceOrder from './component_Malmi/EditPlaceOrder';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -66,6 +68,7 @@ root.render(
 <Route path="/Payment/:amount" element={<Payment />} />
 <Route path="/Orders" element={<Orders />} />
 <Route path="/PlaceOrder" element={<PlaceOrder />} />
+<Route path="/EditPlaceOrder" element={<EditPlaceOrder />} />
 
     </Routes>
   </BrowserRouter>
