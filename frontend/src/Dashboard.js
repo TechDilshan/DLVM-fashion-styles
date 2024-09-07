@@ -12,6 +12,10 @@ const Dashboard = () => {
     navigate('/Users');
   }
 
+  const logoutBtb = () =>{
+    navigate('/login');
+  }
+
   return (
     <div className="dashboard-container">
       <div className="box-row">
@@ -30,7 +34,7 @@ const Dashboard = () => {
           <h2 className='box-name'>User Feedbacks</h2>
         </button>
       </div>
-      <button className="logout-btn">Logout</button>
+      <button className="logout-btn" onClick={() => logoutBtb()}>Logout</button>
     </div>
   );
 };

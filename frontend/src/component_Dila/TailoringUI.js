@@ -9,6 +9,7 @@ import { faBox, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'; 
 import logo from '../image/logo.jpg';
+import { LinearProgress } from "@mui/material";
 
 const CustomTailoringForm = () => {
   const [countries, setCountries] = useState([]);
@@ -22,6 +23,7 @@ const CustomTailoringForm = () => {
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('pending');
   const [tid, setTid] = useState(10000);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const CustomTailoringForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     console.log(desiredOutfit,gender,country, negativeOutfit);
 
     try {
@@ -67,6 +69,7 @@ const CustomTailoringForm = () => {
 
       // Log the response link to the console
       console.log('Generated Outfit Link:', link);
+      setLoading(false);
       
     } catch (error) {
       console.error('Error submitting form data', error);
@@ -166,7 +169,7 @@ const CustomTailoringForm = () => {
               </div>
             </div>
         </div>
-        <div className="form-container">
+        <div className="form-container1">
           <h1 className="form-title">Custom Tailoring</h1>
           <form onSubmit={handleSubmit} className="custom-tailoring-form">
 
@@ -262,7 +265,9 @@ const CustomTailoringForm = () => {
             <button type="submit" className="submit-button">Generate Outfit</button>
           </form>
 
-
+          <div style={{ color: "#000000" }}>
+                {loading && <LinearProgress />}
+            </div>
 
           {/* Picture Box */}
           <div className="picture-box">

@@ -27,11 +27,13 @@ import ShoppingCart from './component_Lima/ShoppingCart';
 
 //Vihanga
 import Login from './component_vihanga/login';
+import SignUp from './component_vihanga/signUp'
 
 
 //Malmi
 import Payment from './component_Malmi/Payment';
 import Orders from './component_Malmi/Orders';
+import PlaceOrder from './component_Malmi/PlaceOrder'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -58,10 +60,12 @@ root.render(
 
 {/* Component Vihanga */}
         <Route path='/Login' element={<Login />} />
+        <Route path='/SignUp' element={<SignUp />} />
 
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />
 <Route path="/Orders" element={<Orders />} />
+<Route path="/PlaceOrder" element={<PlaceOrder />} />
 
     </Routes>
   </BrowserRouter>
