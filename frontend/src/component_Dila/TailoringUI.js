@@ -58,7 +58,7 @@ const CustomTailoringForm = () => {
       formData.append('gender', gender);
       formData.append('country', country);
       formData.append('negative', negativeOutfit);
-      formData.append('email', 'kwdsylfcoslgcuciiv@nbmbb.com');
+      formData.append('email', 'pmmufiiokqennikaql@hthlm.com');
       formData.append('password', 'abcdef');
 
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
@@ -107,6 +107,7 @@ const CustomTailoringForm = () => {
     Axios.post('http://localhost:3001/api/createtailoring', payload)
       .then((response) => {
         console.log('Done');
+        alert('Successfully Generated Outfit..!')
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
