@@ -44,16 +44,22 @@ const updateCart = (req, res, next) => { // Function to update a cart item
 };
 
 
-const deleteCart = (req, res, next) => { // Function to delete a cart item
-    const id = req.body.id;  // Extract the ID of the cart item to be deleted from the request body
-    Cart.deleteOne({id: id}) // Delete the specified cart item from the database
+const deleteCart = (req, res, next) => { 
+    const id = req.body.id; 
+
+    Cart.deleteOne({ id: id }) 
         .then(response => {
-            res.json({ response })
+            if (response.deletedCount > 0) {
+                res.json({ success: true, message: "Cart item deleted successfully", data: response });
+            } else {
+                res.status(404).json({ success: false, message: "Cart item not found" });
+            }
         })
         .catch(error => {
-            res.json({ error })
+            next(error); // Pass the error to the next middleware for centralized error handling
         });
 };
+
 
 
 exports.createCart = createCart;

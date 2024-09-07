@@ -8,6 +8,8 @@ import { storage } from "../firebase";
 import StockUpdate_C from '../component_Dila/StockUpdate_C';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import Foot from '../footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const styles = StyleSheet.create({
   page: {
@@ -51,14 +53,11 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-
 const BillGenerator = ({ items, total, carts }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.title}>RATHI INTEC SHOPPING CART BILL</Text>
+        <Text style={styles.title}>DLVM SHOPPING CART BILL</Text>
         {items.map(item => {
           const filteredCart = carts.find(c => c.id === item.id);
           return (
@@ -75,8 +74,6 @@ const BillGenerator = ({ items, total, carts }) => (
     </Page>
   </Document>
 );
-
-
 
 const ShoppingCart = () => {
   const [carts, setCarts] = useState([]); 
@@ -232,7 +229,7 @@ const ShoppingCart = () => {
         <Navi />
       </div>
       <div className='shopping-cart'>
-        <h2 className='cart-title'>Shopping Cart</h2>
+        <h2 className='cart-title'>My Cart</h2>
         <div>
           <input 
             type="text" 
@@ -305,6 +302,4 @@ const ShoppingCart = () => {
   );
 };
 
-
 export default ShoppingCart;
-

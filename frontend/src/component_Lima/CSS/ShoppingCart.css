@@ -2,27 +2,25 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 15px;
-  border: 2px solid #007bff;
+  border: 2px solid #999999;
   border-radius: 10px;
   background-color: #def0f0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .cart-title {
-  font-size: 30px; /* Adjust font size as needed */
-  font-weight: bold; /* Make the title bold */
-  margin-bottom: 10px; /* Adjust bottom margin as needed */
-  text-align: center; /* Align the title to the center */
-  color: #333; /* Title color */
-  text-transform: uppercase; /* Convert text to uppercase */
-  background-image: linear-gradient(to right, #011231, #017997); /* Gradient colors */
-  -webkit-background-clip: text; /* Clip text to the gradient */
-  background-clip: text; /* Clip text to the gradient */
-  -webkit-text-fill-color: transparent; /* Hide text color to allow gradient to show */
+  font-size: 30px; 
+  font-weight: bold; 
+  margin-bottom: 10px; 
+  text-align: center; 
+  color: #333; 
+  text-transform: uppercase; 
+  background-image: linear-gradient(to right, #011231, #017997); 
+  -webkit-background-clip: text; 
+  background-clip: text; 
+  -webkit-text-fill-color: transparent; 
   font-style: italic;
 }
-
-
 
 .cart-item {
   display: flex;
@@ -47,8 +45,8 @@
   font-weight: bold;
 }
 
-
 .item-price {
+
   font-size: 18px;
   
 }
@@ -104,7 +102,6 @@
     border-color: #007074;
   }
   
-
   .pdf-download-button {
     margin-top: 10px;
     display: inline-block;
@@ -171,7 +168,6 @@
 .coupon{
   font-weight: bold;
 }
-
 
 .update{
   padding: 8px 15px;
