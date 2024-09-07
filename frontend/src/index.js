@@ -28,6 +28,7 @@ import ShoppingCart from './component_Lima/ShoppingCart';
 //Vihanga
 import Login from './component_vihanga/login';
 import SignUp from './component_vihanga/signUp'
+import ForgotPassword from './component_vihanga/forgotPassword'
 
 
 //Malmi
@@ -63,6 +64,7 @@ root.render(
 {/* Component Vihanga */}
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/forgotPassword' element={<ForgotPassword />} />
 
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />

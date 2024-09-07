@@ -65,7 +65,7 @@ const Login = () => {
       <div className="login-container">
         <form className="login-form" onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <p>Doesn’t have an account yet? <a href="/register">Sign Up</a></p>
+          <p>Doesn’t have an account yet? <a href="/signUp">Sign Up</a></p>
           
           <div className="input-group">
             <label>Email Address</label>
@@ -79,7 +79,7 @@ const Login = () => {
           </div>
 
           <div className="input-group">
-            <label>Password <a href="#" className="forgot-link">Forgot Password?</a></label>
+            <label>Password <a href="/forgotPassword" className="forgot-link">Forgot Password?</a></label>
             <input
               type="password"
               value={password}

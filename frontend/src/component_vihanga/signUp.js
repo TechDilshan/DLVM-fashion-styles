@@ -36,6 +36,8 @@ const Register = () => {
       Axios.post('http://localhost:3001/api/create-customer', payload)
         .then((response) => {
           console.log('Done');
+          alert('Successfully created account..!');
+          navigate('/login');
         })
         .catch((error) => {
           console.error('Axios Error: ', error);
