@@ -148,10 +148,10 @@ const AdminDisplay = ({ rows, selectedUser, deleteUser }) => {
         {/* Category buttons */}
           <div className="mb-25">
             <button onClick={() => handleCategoryButtonClick('All')} className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-2 mb-2">All Items</button>
-            <button onClick={() => handleCategoryButtonClick('bookitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Book Items</button>
-            <button onClick={() => handleCategoryButtonClick('schoolitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">School Items</button>
-            <button onClick={() => handleCategoryButtonClick('mobileitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Mobile Items</button>
-            <button onClick={() => handleCategoryButtonClick('techitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Tech Items</button>
+            <button onClick={() => handleCategoryButtonClick('trending')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Trending Items</button>
+            <button onClick={() => handleCategoryButtonClick('menitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">For Men Items</button>
+            <button onClick={() => handleCategoryButtonClick('kidsitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">For Women Items</button>
+            <button onClick={() => handleCategoryButtonClick('womenitem')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">For Kids & Baby Items</button>
             <button onClick={() => handleCategoryButtonClick('outstock')} className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Out Of Stock</button>
 
           {selectedCategory && (

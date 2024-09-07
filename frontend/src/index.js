@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Dashboard from './Dashboard';
 
 //Dilshan
 import Users from './component_Dila/Users';
@@ -19,22 +20,30 @@ import TailoringDisplay from './component_Dila/TailoringDisplay';
 import TailoringMyOrders from './component_Dila/TailoringMyOrders';
 
 
+
 //Limasha
 import ShoppingCart from './component_Lima/ShoppingCart';
 
 
 //Vihanga
 import Login from './component_vihanga/login';
+import SignUp from './component_vihanga/signUp'
 
 
 //Malmi
+import Payment from './component_Malmi/Payment';
+import Orders from './component_Malmi/Orders';
+import PlaceOrder from './component_Malmi/PlaceOrder'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 <BrowserRouter>
     <Routes>
+        
 {/* Component Dilashan */}
         <Route path='/' element={<App />} />
+        <Route path='/Dashboard' element={<Dashboard />} />
+
         <Route path='/users' element={<Users />} />
         <Route path='/AdminDisplay' element={<AdminDisplay />} />
         <Route path='/UserHome_C' element={<UserHome />} />
@@ -51,8 +60,13 @@ root.render(
 
 {/* Component Vihanga */}
         <Route path='/Login' element={<Login />} />
+        <Route path='/SignUp' element={<SignUp />} />
 
 {/* Component Malmi */}
+<Route path="/Payment/:amount" element={<Payment />} />
+<Route path="/Orders" element={<Orders />} />
+<Route path="/PlaceOrder" element={<PlaceOrder />} />
+
     </Routes>
   </BrowserRouter>
 );

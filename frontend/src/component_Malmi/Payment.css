@@ -1,0 +1,71 @@
+
+  
+  .payment-form input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .payment-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .payment-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pdf-download {
+    margin-top: 20px;
+  }
+  .form-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    flex-direction: column;
+    background-color: #ffdee9;
+    background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+}
+
+.form-container form{
+    width: 400px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+    background-color: #fff;
+}
+
+.form-container form .title{
+    font-size: 34;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    
+}
+
+.form-container form input{
+   border: none;
+   border-bottom: 1px solid #000;
+   border-radius: 0;
+}
+
+.form-container form button{
+    border: 1px solid #000;
+    border-radius: 0;
+    background-color: #000;
+    color: white;
+    width: 320px;
+    margin: 15px;
+    padding: 10px;
+ }
+
+ .form-container form button:hover{
+    border: 1px solid #000;
+    background: #000;
+    background: linear-gradient(to right, #434343, #000);
+    width: 320px;
+ }

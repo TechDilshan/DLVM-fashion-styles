@@ -1,0 +1,31 @@
+/* PaymentListPage.css */
+.orders {
+    padding: 20px;
+  }
+  
+  .orders table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .orders th, .orders td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .orders th {
+    background-color: #f4f4f4;
+  }
+  
+  .orders button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .orders button:hover {
+    background-color: #0056b3;
+  }
