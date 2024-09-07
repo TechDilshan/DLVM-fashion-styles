@@ -6,10 +6,13 @@ import Foot from '../footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../image/logo.jpg';
+import { useNavigate } from 'react-router-dom';
+
 
 const TailoringDisplay = () => {
   const [tailorings, setTailorings] = useState([]);
   const [priceEdits, setPriceEdits] = useState({});
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchTailorings = async () => {
@@ -76,6 +79,15 @@ const TailoringDisplay = () => {
     }
   };
 
+  const handleLogout =()=>{
+    const confirmLogout = window.confirm("Do you want to Logout?");
+    if(confirmLogout){
+      sessionStorage.setItem('userEmail', 'empty');
+      sessionStorage.clear();
+      navigate('/login');
+    }
+  }
+
   return (
     <div class="containerhome">
 
@@ -91,7 +103,7 @@ const TailoringDisplay = () => {
               <li><a href="/TailoringDisplay">Tailoring Orders <i className="fas fa-user"></i></a></li>
               <li><a href="/pmprofile">My Account <i className="fas fa-user"></i></a></li>
               <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
-              <li><a>Logout</a></li>
+              <li><a onClick={handleLogout}>Logout</a></li>
           </span>
           <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
       </ul>

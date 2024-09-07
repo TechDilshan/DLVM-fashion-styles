@@ -226,7 +226,7 @@ const ShoppingCart = () => {
   };
   
   const handlePayNow = (total) => {
-    navigate(`/payment/${total}`)
+    navigate(`/EditPlaceOrder/${total}`)
   };
 
 

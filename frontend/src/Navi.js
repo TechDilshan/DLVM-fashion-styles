@@ -17,7 +17,7 @@ const NaviBar = () => {
   const handleLogout =()=>{
     const confirmLogout = window.confirm("Do you want to Logout?");
     if(confirmLogout){
-      sessionStorage.setItem('userPosition', 'empty');
+      sessionStorage.setItem('userEmail', 'empty');
       sessionStorage.clear();
       navigate('/login');
     }

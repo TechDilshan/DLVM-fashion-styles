@@ -100,7 +100,7 @@ const AdminDisplay = ({ rows, selectedUser, deleteUser }) => {
           <Image src={logoImage} style={styles.logo} />
           <View>
             <Text style={styles.date}>Generated Product pdf on: {currentDate}</Text>
-            <Text style={styles.topic}>Rathiy Intech Available Item List</Text>
+            <Text style={styles.topic}>DLVM Fashion Styles Available Item List</Text>
           </View>
       </View>
         <View style={styles.table}>

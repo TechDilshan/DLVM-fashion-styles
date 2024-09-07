@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './PlaceOrder.css';
 import Navi from '../Navi';
 import Foot from '../footer'
@@ -10,6 +10,7 @@ import Foot from '../footer'
 const PlaceOrder = () => {
   
 
+  const { amount } = useParams(); 
   const [DeliveryId, setDeliveryId] = useState(0);
   const [deliveryName, setDeliveryName] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -17,6 +18,8 @@ const PlaceOrder = () => {
   const [deliveryPhone, setDeliveryPhone] = useState('');
   const [deliveryEmail, setDeliveryEmail] = useState('');
   const [userEmail, setUserEmail] = useState('');
+
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -44,6 +47,10 @@ const PlaceOrder = () => {
     }
   };
 
+  const handlePayNow = () =>{
+    navigate(`/payment/${amount}`)
+  }
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -63,7 +70,7 @@ const PlaceOrder = () => {
     Axios.post('http://localhost:3001/api/update-delivery', payload)
       .then((response) => {
         console.log('Done');
-        //DeliveryDetails();
+        alert('Successfully updated Delivery Details.!')
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
@@ -102,6 +109,7 @@ const PlaceOrder = () => {
           
 
         <button type="submit" className="btn btn-primary btn-lg">Update</button>
+        <button className="btn btn-primary btn-lg" onClick={() => handlePayNow()}>Proceed to Payment</button>
       </form>
   
         </div>

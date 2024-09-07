@@ -118,15 +118,12 @@ const Users = () => {
   };
 
   const handleLogout =()=>{
-    Axios.get('http://localhost:5000/auth/logout')
-    .then(res => {
-      if(res.data.status){
-        sessionStorage.removeItem('userEmail');
-        navigate('/login')
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    const confirmLogout = window.confirm("Do you want to Logout?");
+    if(confirmLogout){
+      sessionStorage.setItem('userEmail', 'empty');
+      sessionStorage.clear();
+      navigate('/login');
+    }
   }
 
   // Start return

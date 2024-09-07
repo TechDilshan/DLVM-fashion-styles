@@ -41,6 +41,7 @@ const Payment = () => {
     Axios.post('http://localhost:3001/api/create-payment', payload)
       .then((response) => {
         console.log('Done');
+        alert('Successfully Place Order..!')
       })
       .catch((error) => {
         console.error('Axios Error: ', error);

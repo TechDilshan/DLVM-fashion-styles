@@ -70,7 +70,7 @@ root.render(
 <Route path="/Payment/:amount" element={<Payment />} />
 <Route path="/Orders" element={<Orders />} />
 <Route path="/PlaceOrder" element={<PlaceOrder />} />
-<Route path="/EditPlaceOrder" element={<EditPlaceOrder />} />
+<Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
 
     </Routes>
   </BrowserRouter>
