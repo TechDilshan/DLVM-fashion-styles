@@ -60,7 +60,7 @@ const CustomTailoringForm = () => {
       formData.append('negative', negativeOutfit);
       formData.append('email', 'pmmufiiokqennikaql@hthlm.com');
       formData.append('password', 'abcdef');
-
+//gamagemadu001@gmail.com
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
 
 

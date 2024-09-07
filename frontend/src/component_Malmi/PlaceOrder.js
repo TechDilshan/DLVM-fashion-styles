@@ -20,7 +20,9 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     fetchMaxIdAndSetId();
-  });
+    const email = sessionStorage.getItem('userEmail');
+    setDeliveryEmail(email);
+  }, [deliveryEmail]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,11 +39,12 @@ const PlaceOrder = () => {
       deliveryAddress: deliveryAddress,
       zipCode: zipCode,
       deliveryPhone: deliveryPhone,
-      deliveryEmail: 'abc@gmail.com',
+      deliveryEmail: deliveryEmail,
     };
     Axios.post('http://localhost:3001/api/create-delivery', payload)
       .then((response) => {
         console.log('Done');
+        alert('Successfully added Delivery details')
       })
       .catch((error) => {
         console.error('Axios Error: ', error);

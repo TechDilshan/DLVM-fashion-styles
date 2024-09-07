@@ -23,7 +23,8 @@ const PlaceOrder = () => {
 
 
   useEffect(() => {
-    setUserEmail('abc@gmail.com');
+    const email = sessionStorage.getItem('userEmail');
+    setUserEmail(email);
     DeliveryDetails();
     
   }, [userEmail]);
