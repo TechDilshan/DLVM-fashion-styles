@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Payment.css';
 import Navi from '../Navi';
 import Footer from '../footer'
@@ -14,6 +14,8 @@ const Payment = () => {
   const [expDate, setExpDate] = useState('');
   const [holderName, setHolderName] = useState('');
   const [cvv, setCvv] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMaxIdAndSetId();
@@ -41,7 +43,8 @@ const Payment = () => {
     Axios.post('http://localhost:3001/api/create-payment', payload)
       .then((response) => {
         console.log('Done');
-        alert('Successfully Place Order..!')
+        alert('Successfully Place Order..!');
+        navigate(`/Orders`);
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
@@ -62,13 +65,11 @@ const Payment = () => {
   return (
 
     <div>
-       <Navi/>
-    
-         <div className="payment-page">
+       <Navi/> 
          
-    <div className='form-container'>
+    <div className='paymentForm'>
           <form onSubmit={handleSubmit}>
-          <h4 className='title'>Payment</h4>
+          <div className='title'>Payment Details</div>
           <div className="mb-3">
              <label htmlFor="userAmount" className="form-label">Enter Payment Amount</label>
              <input type="text" name="userAmount" value = {amount} className="form-control form-control-lg"  
@@ -105,7 +106,7 @@ const Payment = () => {
       </form>
   
         </div>
-        </div>
+   
 
 <Footer/>
         </div>

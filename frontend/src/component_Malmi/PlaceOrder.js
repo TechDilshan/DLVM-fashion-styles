@@ -24,14 +24,16 @@ const PlaceOrder = () => {
     setDeliveryEmail(email);
   }, [deliveryEmail]);
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(DeliveryId)
-    console.log(deliveryName)
-    console.log(deliveryAddress)
-    console.log(zipCode)
-    console.log(deliveryPhone)
+    // console.log(DeliveryId)
+    // console.log(deliveryName)
+    // console.log(deliveryAddress)
+    // console.log(zipCode)
+    // console.log(deliveryPhone)
 
     const payload = {
       deliveryId: DeliveryId,
@@ -41,16 +43,18 @@ const PlaceOrder = () => {
       deliveryPhone: deliveryPhone,
       deliveryEmail: deliveryEmail,
     };
-    Axios.post('http://localhost:3001/api/create-delivery', payload)
-      .then((response) => {
-        console.log('Done');
-        alert('Successfully added Delivery details')
-      })
-      .catch((error) => {
-        console.error('Axios Error: ', error);
-      });
-
+ 
+  try {
+     await Axios.post('http://localhost:3001/api/create-delivery', payload);
+    console.log('Done');
+    alert('Successfully added Delivery Details');
+    
+    
+  
+  } catch (error) {
+    console.error('Axios Error: ', error);
   }
+};
 
   const fetchMaxIdAndSetId = async () => {
     try {
@@ -66,7 +70,7 @@ const PlaceOrder = () => {
          <div className="placeOrder-page">
           <Navi/>
          
-    <div className='form-container'>
+    <div className='orderForm'>
           <form onSubmit={handleSubmit}>
           <h4 className='title'>Place Order</h4>
           <div className="mb-3">
@@ -82,7 +86,7 @@ const PlaceOrder = () => {
           <div className="mb-3">
              <label htmlFor="zipcode" className="form-label">Enter zipcode </label>
              <input type="Number" value = {zipCode} className="form-control form-control-lg" name="zipcode" 
-              onChange={(e) => setZipCode(e.target.value)} required/>
+              onChange={(e) => setZipCode(e.target.value)} maxLength={3}  required/>
 
           </div>
           <div className="mb-3">

@@ -36,6 +36,7 @@ import Payment from './component_Malmi/Payment';
 import Orders from './component_Malmi/Orders';
 import PlaceOrder from './component_Malmi/PlaceOrder';
 import EditPlaceOrder from './component_Malmi/EditPlaceOrder';
+import Recommend from './component_Malmi/Recommend';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -71,6 +72,7 @@ root.render(
 <Route path="/Orders" element={<Orders />} />
 <Route path="/PlaceOrder" element={<PlaceOrder />} />
 <Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
+<Route path="/Recommend" element={<PlaceOrder />} />
 
     </Routes>
   </BrowserRouter>

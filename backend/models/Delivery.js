@@ -9,6 +9,7 @@ const deliverySchema = new Schema({
     zipCode: String,
     deliveryPhone: String,
     deliveryEmail: String,
+    amount: Number,
 });
 
 const Delivery = mongoose.model('Delivery',deliverySchema);
