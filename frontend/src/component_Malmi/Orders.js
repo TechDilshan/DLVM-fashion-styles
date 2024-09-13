@@ -106,7 +106,8 @@ const Orders = () => {
     console.log('Delete order with deliveryId:', deliveryId);
     try {
       await Axios.post('http://localhost:3001/api/delete-delivery');
-    setOrders(orders.filter(order => order.deliveryId !== deliveryId));  // Update state
+    setOrders(orders.filter((order) => order.deliveryId !== deliveryId));  // Update state
+    
      console.log("sucess");
      alert('Order successfully deleted!');
     
@@ -122,7 +123,7 @@ const Orders = () => {
     return (
       <>
       <div>
-        <Navi/>
+        <Navi />
       </div>
         <div className='header' >Order List</div>
         {/* Search by name..."  */}
@@ -158,10 +159,11 @@ const Orders = () => {
 
                   return (
                     deliveryName.includes(query) || // Search by name
-                    deliveryAddress.includes(query)   // Search by Address
+                    deliveryAddress.includes(query)  // Search by Address
                   );
 
-                }).map((order) => (
+                })
+                .map((order) => (
             <tr key={order.deliveryId}>
                 <td>{order.deliveryId}</td>
                 <td>{order.deliveryName}</td>

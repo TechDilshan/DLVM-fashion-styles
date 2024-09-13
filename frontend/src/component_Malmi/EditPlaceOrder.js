@@ -90,11 +90,7 @@ const EditPlaceOrder = () => {
     <div className='orderForm'>
           <form onSubmit={handleUpdate}>
           <div className='title'>Update Delivery Details</div>
-          <div className="mb-3">
-             <label htmlFor="userID" className="form-label">Enter Delivery ID</label>
-             <input type="text" name="userID" value = {DeliveryId} className="form-control form-control-lg"  
-              onChange={(e) => setDeliveryId(e.target.value)} required/>
-          </div>
+          
           <div className="mb-3">
              <label htmlFor="userName" className="form-label">Enter Your Name</label>
              <input type="text" name="userName" value = {deliveryName} className="form-control form-control-lg"  
