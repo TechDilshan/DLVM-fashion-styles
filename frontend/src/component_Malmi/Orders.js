@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import './Orders.css';
 import Navi from '../Navi';
@@ -67,7 +67,7 @@ const GenerateReceipt = ({ orders, amount }) => (
             <Text style={styles.deliveryName}>Name: {order.deliveryName}</Text>
             <Text style={styles.deliveryAddress}>Address: {order.deliveryAddress}</Text>
             <Text style={styles.deliveryPhone}>Phone Number: {order.deliveryPhone}</Text>
-            <Text style={styles.amount}>Total Amount: LKR. {amount} /=</Text>
+            <Text style={styles.amount}>Total Amount: LKR. {order.amount} /=</Text>
           </View>
         ))}
        
@@ -79,7 +79,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  
+  const { amount } = useParams(); 
   
   
 
@@ -100,6 +100,10 @@ const Orders = () => {
     }
   };
 
+    const handleUpdate = () => {
+    navigate(`/EditPlaceOrder/${amount}`);
+  };
+
 
 
   const handleDelete = async (deliveryId) => {
@@ -110,7 +114,7 @@ const Orders = () => {
     
      console.log("sucess");
      alert('Order successfully deleted!');
-    
+     navigate(`/Orders`)
     } catch (error) {
       console.error('Axios Error (deleteOrder): ', error);
     }
@@ -134,7 +138,7 @@ const Orders = () => {
 
         </div>
         <button type='button' className="pdfButton">
-          <PDFDownloadLink document={<GenerateReceipt orders={orders} amount={2000} />} fileName="receipt.pdf">
+          <PDFDownloadLink document={<GenerateReceipt orders={orders} amount={orders.amount} />} fileName="receipt.pdf">
             {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download Bill')}
           </PDFDownloadLink>
         </button>
@@ -172,7 +176,9 @@ const Orders = () => {
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
                 <td>
+                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.deliveryId)}>Update</button>
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
+                 
                   </td>
                 </tr>
               ))}

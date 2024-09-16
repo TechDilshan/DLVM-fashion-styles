@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Payment.css';
 import Navi from '../Navi';
 import Footer from '../footer'
+import PlaceOrder from './PlaceOrder';
 
 const Payment = () => {
 
@@ -44,7 +45,7 @@ const Payment = () => {
       .then((response) => {
         console.log('Done');
         alert('Successfully Place Order..!');
-        navigate(`/Orders`);
+        navigate(`/PlaceOrder/${amount}`);
       })
       .catch((error) => {
         console.error('Axios Error: ', error);
@@ -61,6 +62,8 @@ const Payment = () => {
       console.error('Axios Error (getMaxId): ', error);
     }
   };
+
+ 
   
   return (
 
@@ -103,6 +106,7 @@ const Payment = () => {
           
 
         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+      
       </form>
   
         </div>

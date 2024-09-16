@@ -53,3 +53,11 @@
     width: 500px;
  }
 
+ .error {
+  color: red;
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+

@@ -70,7 +70,7 @@ root.render(
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />
 <Route path="/Orders" element={<Orders />} />
-<Route path="/PlaceOrder" element={<PlaceOrder />} />
+<Route path="/PlaceOrder/:amount" element={<PlaceOrder />} />
 <Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
 <Route path="/Recommend" element={<PlaceOrder />} />
 
