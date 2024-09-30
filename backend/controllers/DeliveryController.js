@@ -79,11 +79,14 @@ const updateDelivery = (req, res, next) => {
         });
 };
 
+
+
+
 //Delete existing Delivery
-const deleteDelivery = (req, res) => {
+const deleteDelivery = (req, res, next) => {
     
     const {deliveryId} = req.params;
-    Delivery.findOneAndDelete({deliveryId: deliveryId})
+    Delivery.deleteOne({deliveryId: deliveryId})
         .then(response => {
             res.json({ response });
         })

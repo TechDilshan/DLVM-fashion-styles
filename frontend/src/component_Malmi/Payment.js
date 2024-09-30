@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Payment.css';
 import Navi from '../Navi';
 import Footer from '../footer'
-import PlaceOrder from './PlaceOrder';
+//import PlaceOrder from './PlaceOrder';
 
 const Payment = () => {
 

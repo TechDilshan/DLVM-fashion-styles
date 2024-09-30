@@ -113,7 +113,7 @@ const Orders = () => {
     setOrders(orders.filter((order) => order.deliveryId !== deliveryId));  // Update state
     
      console.log("sucess");
-     alert('Order successfully deleted!');
+     alert('Order successfully Deleted!');
      navigate(`/Orders`)
     } catch (error) {
       console.error('Axios Error (deleteOrder): ', error);
