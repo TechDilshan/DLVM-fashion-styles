@@ -1,50 +1,113 @@
-import React, { useState, useEffect } from 'react';
-import { storage } from "../firebase"; // Import your Firebase configuration
-import { collection, getDocs } from "firebase/firestore";
-import { Link } from 'react-router-dom';
-import '../index.css';
-import './Recommend.css'; // Import your styles
+import React, { useEffect, useState } from 'react';
+import { CircularProgress } from '@mui/material';
+import ProductItem_C from '../component_Dila/ProductItem_C';
+import { Link } from 'react-router-dom'; 
+import Navi from '../Navi';
+import Foot from '../footer';
+import Axios from 'axios';
+import '../CSS_C/ProductHomeCSS_C.css';
 
 const Recommend = () => {
-  const [items, setItems] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [showAll, setShowAll] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(storage, "products")); // Fetch products from Firestore
-        const itemsList = querySnapshot.docs
-          .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(item => item.stock > 30); // Filter items with stock greater than 30
-          console.log("Fetched items:", itemsList); // Add this line
-        setItems(itemsList);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      }
+    const fetchUsers = () => {
+      Axios.get('http://localhost:3001/api/cloths')
+        .then((response) => {
+          setUsers(response.data?.response || []);
+          setLoading(false); 
+        })
+        .catch((error) => {
+          console.error('Axios Error: ', error);
+        });
     };
 
-    fetchItems();
+    fetchUsers();
+    const intervalId = setInterval(fetchUsers, 1000); // Refresh every second
+    return () => clearInterval(intervalId);
   }, []);
 
-  return (
+  // Filter items based on stock greater than 30 and search term
+  const filteredItems = users
+    .filter(user => user.stock > 30)
+    .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  // Limit visible items to 8 if not showing all
+  const visibleItems = showAll ? filteredItems : filteredItems.slice(0, 8);
+
+  // Filter Products based on item category
+  // Filter Products based on item category
+  const visibleTrending = visibleItems.filter(user => user.item === 'trending');
+  const visibleMen = visibleItems.filter(user => user.item === 'menitem');
+  const visibleWomen = visibleItems.filter(user => user.item === 'womenitem');
+  const visibleKids = visibleItems.filter(user => user.item === 'kidsitem');
+
   
-    <div className="recommendations-container">
-        <div className='header'>Recommended for You</div>
-      <div className="recommendations-grid">
-        {items.length > 0 ? (
-          items.map(item => (
-            <div key={item.id} className="recommendation-item">
-              <img src={item.imageUrl} alt={item.name} className="recommendation-image" />
-              <h3 className="recommendation-name">{item.name}</h3>
-              <p className="recommendation-price">LKR. {item.price}</p>
-              <Link to={{ pathname: "/product-details", state: { row: item } }} className="view-details">
-                View Details
-              </Link>
+  return (
+    <div className="w-calc(100% - 100px) mx-auto mt-2 lg:ml-2 lg:mr-2" style={{ backgroundColor: "#EEEBEB" }}>
+      <Navi />
+      
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress size={150} />
+        </div>
+      ) : (
+        <>
+          <div className="sub-navi">
+            <div className="search-container">
+              <input
+                type="text"
+                className="search-bar"
+                placeholder="Search items..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+           
+              />
             </div>
-          ))
-        ) : (
-          <p>No recommendations available at the moment.</p>
-        )}
-      </div>
+
+            {/* Navigation Links */}
+            <Link to="/MenCloths"><div className="cloth-type">Men</div></Link>
+            <Link to="/WomenCloths"><div className="cloth-type">Women</div></Link>
+            <Link to="/KidsCloths"><div className="cloth-type">Kids & Baby</div></Link>
+            <Link to="/Recommend"><div className="cloth-type">Suggestions</div></Link>
+            <Link to="/TailoringUI"><div className="cloth-type">Custom Tailoring</div></Link>
+          </div>
+
+          {/* All Items Products Section */}
+          <div className="other-section">
+            <div id="book-items-section">
+              <div className="section-header"><div>SHOP ALL ITEMS</div></div>
+              <div className="product-grid">
+                {visibleTrending.map(user => (
+                  <div key={user.id} className="product-item">
+                    <ProductItem_C rows={[user]} /> 
+                  </div>
+                ))}
+                {visibleMen.map(user => (
+                  <div key={user.id} className="product-item">
+                    <ProductItem_C rows={[user]} /> 
+                  </div>
+                ))}
+                {visibleWomen.map(user => (
+                  <div key={user.id} className="product-item">
+                    <ProductItem_C rows={[user]} /> 
+                  </div>
+                ))}
+                {visibleKids.map(user => (
+                  <div key={user.id} className="product-item">
+                    <ProductItem_C rows={[user]} /> 
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <Foot />
+        </>
+      )}
     </div>
   );
 };

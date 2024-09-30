@@ -9,7 +9,6 @@ import Foot from '../footer'
 
 const EditPlaceOrder = () => {
   
-
   const { amount } = useParams(); 
   
   const [DeliveryId, setDeliveryId] = useState(0);

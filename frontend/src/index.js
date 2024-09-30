@@ -72,7 +72,7 @@ root.render(
 <Route path="/Orders" element={<Orders />} />
 <Route path="/PlaceOrder/:amount" element={<PlaceOrder />} />
 <Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
-<Route path="/Recommend" element={<PlaceOrder />} />
+<Route path="/Recommend" element={<Recommend />} />
 
     </Routes>
   </BrowserRouter>
