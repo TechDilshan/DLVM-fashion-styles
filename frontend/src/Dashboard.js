@@ -12,6 +12,10 @@ const Dashboard = () => {
     navigate('/Users');
   }
 
+  const OrderManagement = () =>{
+    navigate('/AdminOrders');
+  }
+
   const logoutBtb = () =>{
     navigate('/login');
   }
@@ -22,7 +26,7 @@ const Dashboard = () => {
         <button className="box box1" onClick={() => profileManagement()}>
           <h2 className='box-name' >Product Management</h2>
         </button>
-        <button className="box box2">
+        <button className="box box2" onClick={() => OrderManagement()}>
           <h2 className='box-name'>Order Management</h2>
         </button>
       </div>
