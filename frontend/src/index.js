@@ -29,7 +29,7 @@ import ShoppingCart from './component_Lima/ShoppingCart';
 import Login from './component_vihanga/login';
 import SignUp from './component_vihanga/signUp'
 import ForgotPassword from './component_vihanga/forgotPassword'
-
+import BodyMeasurement from './component_vihanga/BodyMeasurement'
 
 //Malmi
 import Payment from './component_Malmi/Payment';
@@ -66,6 +66,7 @@ root.render(
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/forgotPassword' element={<ForgotPassword />} />
+        <Route path='/bodymeasurement' element={<BodyMeasurement />} />
 
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />
