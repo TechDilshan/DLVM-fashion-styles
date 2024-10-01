@@ -134,7 +134,7 @@ const AdminOrders = () => {
         <div className='header' >Order List</div>
         {/* Search by name..."  */}
         <div>
-        <input type="search" placeholder="Search" aria-label="Search"
+        <input type="search" placeholder="Search by ID, Name or Address" aria-label="Search"
          value={searchQuery} 
          onChange={(e) => setSearchQuery(e.target.value)}  className="searchBar" />
 
@@ -163,10 +163,12 @@ const AdminOrders = () => {
                   // Handle undefined fields by converting to strings
                   const deliveryName = order.deliveryName?.toLowerCase() || '';
                   const deliveryAddress = order.deliveryAddress?.toLowerCase() || '';
+                  const deliveryId = order.deliveryId?.toString() || '';
 
                   return (
                     deliveryName.includes(query) || // Search by name
-                    deliveryAddress.includes(query)  // Search by Address
+                    deliveryAddress.includes(query) || // Search by Address
+                    deliveryId.includes(query) // Search by ID
                   );
 
                 })

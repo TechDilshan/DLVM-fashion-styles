@@ -100,7 +100,7 @@ const Orders = () => {
     }
   };
 
-    const handleUpdate = () => {
+    const handleUpdate = (amount) => {
     navigate(`/EditPlaceOrder/${amount}`);
   };
 
@@ -136,7 +136,7 @@ const Orders = () => {
         <div className='header' >Order List</div>
         {/* Search by name..."  */}
         <div>
-        <input type="search" placeholder="Search" aria-label="Search"
+        <input type="search" placeholder="Search by ID, Name or Address" aria-label="Search"
          value={searchQuery} 
          onChange={(e) => setSearchQuery(e.target.value)}  className="searchBar" />
 
@@ -164,10 +164,12 @@ const Orders = () => {
                   // Handle undefined fields by converting to strings
                   const deliveryName = order.deliveryName?.toLowerCase() || '';
                   const deliveryAddress = order.deliveryAddress?.toLowerCase() || '';
+                  const deliveryId = order.deliveryId?.toString() || '';
 
                   return (
                     deliveryName.includes(query) || // Search by name
-                    deliveryAddress.includes(query)  // Search by Address
+                    deliveryAddress.includes(query) || // Search by Address
+                    deliveryId.includes(query)
                   );
 
                 })
@@ -180,7 +182,7 @@ const Orders = () => {
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
                 <td>
-                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.deliveryId)}>Update</button>
+                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
                  
                   </td>
