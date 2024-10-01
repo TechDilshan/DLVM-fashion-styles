@@ -109,12 +109,16 @@ const Orders = () => {
   const handleDelete = async (deliveryId) => {
     console.log('Delete order with deliveryId:', deliveryId);
     try {
-      await Axios.post('http://localhost:3001/api/delete-delivery');
+
+      const payload = {
+        deliveryId:deliveryId
+      }
+      await Axios.post('http://localhost:3001/api/delete-delivery',payload);
     setOrders(orders.filter((order) => order.deliveryId !== deliveryId));  // Update state
     
      console.log("sucess");
      alert('Order successfully Deleted!');
-     navigate(`/Orders`)
+     navigate(`/AdminOrders`)
     } catch (error) {
       console.error('Axios Error (deleteOrder): ', error);
     }

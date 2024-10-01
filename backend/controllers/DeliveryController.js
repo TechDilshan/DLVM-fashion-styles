@@ -84,11 +84,10 @@ const updateDelivery = (req, res, next) => {
 
 //Delete existing Delivery
 const deleteDelivery = (req, res, next) => {
-    
-    const {deliveryId} = req.params;
+    const deliveryId = req.body.deliveryId;
     Delivery.deleteOne({deliveryId: deliveryId})
         .then(response => {
-            res.json({ response });
+            res.json({ response })
         })
         .catch(error => {
             res.json({ error })
