@@ -29,13 +29,15 @@ import ShoppingCart from './component_Lima/ShoppingCart';
 import Login from './component_vihanga/login';
 import SignUp from './component_vihanga/signUp'
 import ForgotPassword from './component_vihanga/forgotPassword'
-
+import BodyMeasurement from './component_vihanga/BodyMeasurement'
 
 //Malmi
 import Payment from './component_Malmi/Payment';
 import Orders from './component_Malmi/Orders';
 import PlaceOrder from './component_Malmi/PlaceOrder';
 import EditPlaceOrder from './component_Malmi/EditPlaceOrder';
+import Recommend from './component_Malmi/Recommend';
+import AdminOrders from './component_Malmi/AdminOrders';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -65,12 +67,15 @@ root.render(
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/forgotPassword' element={<ForgotPassword />} />
+        <Route path='/bodymeasurement' element={<BodyMeasurement />} />
 
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />
 <Route path="/Orders" element={<Orders />} />
-<Route path="/PlaceOrder" element={<PlaceOrder />} />
+<Route path="/AdminOrders" element={<AdminOrders />} />
+<Route path="/PlaceOrder/:amount" element={<PlaceOrder />} />
 <Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
+<Route path="/Recommend" element={<Recommend />} />
 
     </Routes>
   </BrowserRouter>

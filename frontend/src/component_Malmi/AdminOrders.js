@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import {useNavigate, useParams } from 'react-router-dom';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import './Orders.css';
+import './AdminOrders.css';
 import Navi from '../Navi';
 import Footer from '../footer';
 
@@ -75,7 +75,7 @@ const GenerateReceipt = ({ orders, amount }) => (
     </Page>
   </Document>
 );
-const Orders = () => {
+const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -100,9 +100,7 @@ const Orders = () => {
     }
   };
 
-    const handleUpdate = (amount) => {
-    navigate(`/EditPlaceOrder/${amount}`);
-  };
+   
 
 
 
@@ -155,6 +153,7 @@ const Orders = () => {
               <th scope="col">Zip Code</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Total Amount</th>
+              <th scope="col">Order Description</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -169,7 +168,7 @@ const Orders = () => {
                   return (
                     deliveryName.includes(query) || // Search by name
                     deliveryAddress.includes(query) || // Search by Address
-                    deliveryId.includes(query)
+                    deliveryId.includes(query) // Search by ID
                   );
 
                 })
@@ -182,7 +181,17 @@ const Orders = () => {
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
                 <td>
-                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
+        {/* Display order description */}
+        <ul>
+
+            <li>
+            Product:  {order.name} - {order.quantity} *  {order.price}
+            </li>
+        
+        </ul>
+      </td>
+                <td>
+             
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
                  
                   </td>
@@ -200,4 +209,4 @@ const Orders = () => {
      
     );
   };
-export default Orders;
+export default AdminOrders;

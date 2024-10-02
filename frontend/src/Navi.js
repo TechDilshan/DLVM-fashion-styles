@@ -45,7 +45,7 @@ const NaviBar = () => {
           )}
 
 {userEmail && (
-            <li><a href="">Body Measurement</a></li>
+            <li><a href="/bodymeasurement">Body Measurement</a></li>
           )}
       </span>
       <label htmlFor="check" className="open-menu"><i className="fas fa-bars"></i></label>
