@@ -19,11 +19,6 @@ const EditPlaceOrder = () => {
   const [userEmail, setUserEmail] = useState('');
   const [errors, setErrors] = useState({});
 
-  const [deliveryNameError, setDeliveryNameError] = useState('');
-  const [deliveryAddressError, setDeliveryAddressError] = useState('');
-  const [zipCodeError, setZipCodeError] = useState('');
-  const [deliveryPhoneError, setDeliveryPhoneError] = useState('');
-
   const navigate = useNavigate();
 
  useEffect(() => {
@@ -56,13 +51,55 @@ const EditPlaceOrder = () => {
   };
 
 
-  
+  const validateValues = () => {
+    let errors = {};
+    const nameLetter = /^[A-Za-z]+$/;
+    if (!nameLetter.test(deliveryName)) {
+      errors.deliveryName = "Delivery Name must contain only letters";
+    }
+    if (deliveryAddress.length < 5) {
+      errors.deliveryAddress = "Please enter a valid Delivery Address";
+    }
+    if (!/^\d{3}$/.test(zipCode)) {
+      errors.zipCode = "Zip Code must contain exactly 3 digits";
+    }        
+    
+    
+    if (!/^(0|[1-9])[0-9]{9}$/.test(deliveryPhone)){
+      errors.deliveryPhone = "Phone Number should be 10 digits";
+    }
+    return errors;
+  };
 
- 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'userName':
+        setDeliveryName(value);
+        break;
+      case 'userAddress':
+        setDeliveryAddress(value);
+        break;
+      case 'zipcode':
+        setZipCode(value);
+        break;
+      case 'phoneNumber':
+        setDeliveryPhone(value);
+        break;
+      default:
+        break;
+    }
+    // Validate on change
+    setErrors(validateValues());
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-   
+    const validationErrors = validateValues();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     // console.log(DeliveryId)
     // console.log(deliveryName)
@@ -70,17 +107,15 @@ const EditPlaceOrder = () => {
     // console.log(zipCode)
     // console.log(deliveryPhone)
 
-    if (validateForm()) {
-      const payload = {
-        deliveryId: DeliveryId,
-        deliveryName: deliveryName,
-        deliveryAddress: deliveryAddress,
-        zipCode: zipCode,
-        deliveryPhone: deliveryPhone,
-        userEmail: userEmail,
-      };
-  
-
+    const payload = {
+      deliveryId: DeliveryId,
+      deliveryName: deliveryName,
+      deliveryAddress: deliveryAddress,
+      zipCode: zipCode,
+      deliveryPhone:deliveryPhone,
+      amount:amount
+      
+    };
     console.log(payload);
     try {
        await Axios.post('http://localhost:3001/api/update-delivery', payload);
@@ -90,58 +125,14 @@ const EditPlaceOrder = () => {
     } catch (error) {
       console.error('Axios Error: ', error);
     }
-  }
   };
   
   // const handlePayNow = () => {
   //   navigate(`/payment/${amount}`);
   // };
 
-  const validateForm = () => {
-    let isValid = true;
-
-    // Validate deliveryName
-  if (!deliveryName.trim()) {
-    setDeliveryNameError('Delivery Name is required');
-    isValid = false;
-  } else {
-    setDeliveryNameError('');
-  }
-
-     // Validate deliveryAddress
-  if (!deliveryAddress.trim()) {
-    setDeliveryAddressError('Delivery Address is required');
-    isValid = false;
-  } else {
-    setDeliveryAddressError('');
-  }
-
-    // Validate zipCode
-  if (!zipCode) {
-    setZipCodeError('Zip Code is required');
-    isValid = false;
-  } else if (!/^\d{5}$/.test(zipCode)) {
-    setZipCodeError('Zip Code should be 5 digits');
-    isValid = false;
-  } else {
-    setZipCodeError('');
-  }
-    // Validate deliveryPhone
-  if (!deliveryPhone.trim()) {
-    setDeliveryPhoneError('Phone Number is required');
-    isValid = false;
-  } else if (!/^\d{10}$/.test(deliveryPhone.trim())) {
-    setDeliveryPhoneError('Phone Number should be 10 digits');
-    isValid = false;
-  } else {
-    setDeliveryPhoneError('');
-  }
-
-    return isValid;
-   };
- 
-
-   
+   // Check if there are any errors
+   const isFormInvalid = Object.keys(errors).length > 0;
 
   return (
     <div>
@@ -154,35 +145,29 @@ const EditPlaceOrder = () => {
           <div className="mb-3">
              <label htmlFor="userName" className="form-label">Enter Your Name</label>
              <input type="text" name="userName" value = {deliveryName} className="form-control form-control-lg"  
-             onChange={(e) => setDeliveryName(e.target.value)} required/>             
-                {deliveryNameError && <div className="error">{deliveryNameError}</div>}
+              onChange={handleChange} required/>
+                {errors.deliveryName && <span className="error">{errors.deliveryName}</span>}
 
           </div>
           <div className="mb-3">
              <label htmlFor="userAddress" className="form-label">Enter Your Address </label>
              <input type="text" value = {deliveryAddress} className="form-control form-control-lg" name="userAddress" 
-             onChange={(e) => setDeliveryAddress(e.target.value)} 
-              required 
-            />
-            {deliveryAddressError && <div className="error">{deliveryAddressError}</div>}
+             onChange={handleChange} required/>
+              {errors.deliveryAddress && <span className="error">{errors.deliveryAddress}</span>}
 
           </div>
           <div className="mb-3">
              <label htmlFor="zipcode" className="form-label">Enter zipcode </label>
              <input type="Number" value = {zipCode} className="form-control form-control-lg" name="zipcode" 
-             onChange={(e) => setZipCode(e.target.value)} 
-              required 
-            />
-            {zipCodeError && <div className="error">{zipCodeError}</div>}
+             onChange={handleChange} required/>
+              {errors.zipCode && <span className="error">{errors.zipCode}</span>}
 
           </div>
           <div className="mb-3">
              <label htmlFor="phoneNumber" className="form-label">Enter Your Phone Number</label>
              <input type="text" value = {deliveryPhone} className="form-control form-control-lg" name="phoneNumber" 
-         onChange={(e) => setDeliveryPhone(e.target.value)} 
-              required 
-            />
-            {deliveryPhoneError && <div className="error">{deliveryPhoneError}</div>}
+            onChange={handleChange}required/>
+             {errors.deliveryPhone && <span className="error">{errors.deliveryPhone}</span>}
           </div>
 
           <div className="mb-3">
@@ -193,7 +178,7 @@ const EditPlaceOrder = () => {
           
 
         <button type="submit" className="btn btn-primary btn-lg"
-    
+        disabled={isFormInvalid} // Disable button if there are errors
         >Update</button>
        
       </form>

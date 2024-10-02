@@ -180,16 +180,7 @@ const AdminOrders = () => {
                 <td>{order.zipCode}</td>
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
-                <td>
-        {/* Display order description */}
-        <ul>
-
-            <li>
-            Product:  {order.name} - {order.quantity} *  {order.price}
-            </li>
-        
-        </ul>
-      </td>
+              
                 <td>
              
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>

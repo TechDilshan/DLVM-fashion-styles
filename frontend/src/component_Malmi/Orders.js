@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import './Orders.css';
 import Navi from '../Navi';
@@ -8,8 +8,8 @@ import Footer from '../footer';
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Helvetica',
-    backgroundColor: '#f5f5f5',
+     fontFamily: 'Helvetica',
+         backgroundColor: '#f5f5f5',
     padding: 20,
   },
   section: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const GenerateReceipt = ({ orders }) => (
+const GenerateReceipt = ({ orders, amount }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -70,116 +70,141 @@ const GenerateReceipt = ({ orders }) => (
             <Text style={styles.amount}>Total Amount: LKR. {order.amount} /=</Text>
           </View>
         ))}
+       
       </View>
     </Page>
   </Document>
 );
-
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  const { amount } = useParams();
+  const { amount } = useParams(); 
+  
+  
 
   useEffect(() => {
     fetchOrderDetails();
   }, []);
 
+
+
+
+
   const fetchOrderDetails = async () => {
     try {
       const response = await Axios.get('http://localhost:3001/api/deliveries');
+      console.log(response.data); // Check the structure of the API response
       const userID = sessionStorage.getItem('userID');
-      const userIDInteger = parseInt(userID, 10);
+      const userIDInteger = parseInt(userID, 10); 
+      console.log(userID)
       const filteredOrders = response.data.response.filter(order => order.dCid === userIDInteger);
       setOrders(filteredOrders);
     } catch (error) {
       console.error('Axios Error: ', error);
     }
   };
+  
+  
 
-  const handleUpdate = (amount) => {
+    const handleUpdate = (amount) => {
     navigate(`/EditPlaceOrder/${amount}`);
   };
 
+
+
   const handleDelete = async (deliveryId) => {
+    console.log('Delete order with deliveryId:', deliveryId);
     try {
+
       const payload = {
-        deliveryId: deliveryId,
-      };
-      await Axios.post('http://localhost:3001/api/delete-delivery', payload);
-      setOrders(orders.filter((order) => order.deliveryId !== deliveryId));
-      alert('Order successfully Deleted!');
-      navigate(`/Orders`);
+        deliveryId:deliveryId
+      }
+      await Axios.post('http://localhost:3001/api/delete-delivery',payload);
+    setOrders(orders.filter((order) => order.deliveryId !== deliveryId));  // Update state
+    
+     console.log("sucess");
+     alert('Order successfully Deleted!');
+     navigate(`/Orders`)
     } catch (error) {
       console.error('Axios Error (deleteOrder): ', error);
     }
   };
 
-  return (
-    <>
+
+ 
+
+
+    return (
+      <>
       <div>
         <Navi />
       </div>
-      <div className='header'>Order List</div>
-      <div>
-        <input
-          type="search"
-          placeholder="Search by ID, Name or Address"
-          aria-label="Search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="searchBar"
-        />
-      </div>
-      <button type='button' className="pdfButton">
-        <PDFDownloadLink document={<GenerateReceipt orders={orders} />} fileName="receipt.pdf">
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download Bill')}
-        </PDFDownloadLink>
-      </button>
-      <table className="ordersTable">
-        <thead>
-          <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Customer Address</th>
-            <th scope="col">Zip Code</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Total Amount</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.filter((order) => {
-            const query = searchQuery.toLowerCase();
-            const deliveryName = order.deliveryName?.toLowerCase() || '';
-            const deliveryAddress = order.deliveryAddress?.toLowerCase() || '';
-            const deliveryId = order.deliveryId?.toString() || '';
+        <div className='header' >Order List</div>
+        {/* Search by name..."  */}
+        <div>
+        <input type="search" placeholder="Search by ID, Name or Address" aria-label="Search"
+         value={searchQuery} 
+         onChange={(e) => setSearchQuery(e.target.value)}  className="searchBar" />
 
-            return (
-              deliveryName.includes(query) ||
-              deliveryAddress.includes(query) ||
-              deliveryId.includes(query)
-            );
-          })
-          .map((order) => (
-            <tr key={order.deliveryId}>
-              <td>{order.deliveryId}</td>
-              <td>{order.deliveryName}</td>
-              <td>{order.deliveryAddress}</td>
-              <td>{order.zipCode}</td>
-              <td>{order.deliveryPhone}</td>
-              <td>LKR {order.amount}</td>
-              <td>
-                <button type="button" className="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
-                <button type="button" className="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
-              </td>
+        </div>
+        <button type='button' className="pdfButton">
+          <PDFDownloadLink document={<GenerateReceipt orders={orders} amount={orders.amount} />} fileName="receipt.pdf">
+            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download Bill')}
+          </PDFDownloadLink>
+        </button>
+        <table className="ordersTable">
+          <thead>
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Customer Name</th>
+              <th scope="col">Customer Address</th>
+              <th scope="col">Zip Code</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Total Amount</th>
+              <th scope="col">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Footer />
-    </>
-  );
-};
+          </thead>
+          <tbody>
+          {orders.filter((order) => {
+                  const query = searchQuery.toLowerCase();
+                  // Handle undefined fields by converting to strings
+                  const deliveryName = order.deliveryName?.toLowerCase() || '';
+                  const deliveryAddress = order.deliveryAddress?.toLowerCase() || '';
+                  const deliveryId = order.deliveryId?.toString() || '';
 
+                  return (
+                    deliveryName.includes(query) || // Search by name
+                    deliveryAddress.includes(query) || // Search by Address
+                    deliveryId.includes(query)
+                  );
+
+                })
+                .map((order) => (
+            <tr key={order.deliveryId}>
+                <td>{order.deliveryId}</td>
+                <td>{order.deliveryName}</td>
+                <td>{order.deliveryAddress}</td>
+                <td>{order.zipCode}</td>
+                <td>{order.deliveryPhone}</td>
+                <td>LKR {order.amount}</td>
+                <td>
+                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
+                  <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
+                 
+                  </td>
+                </tr>
+              ))}
+             
+          </tbody>
+        </table>
+       
+      
+      
+        <Footer/>
+      
+      </>
+     
+    );
+  };
 export default Orders;
