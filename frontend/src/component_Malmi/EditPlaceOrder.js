@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './PlaceOrder.css';
 import Navi from '../Navi';
 import Foot from '../footer'
@@ -11,13 +11,21 @@ const EditPlaceOrder = () => {
   
   const { amount } = useParams(); 
   
+  const location = useLocation(); // Get the passed state from the previous page
+  
+  // Extracting values passed via state
+  const { deliveryName: initialDeliveryName ='', deliveryAddress: initialDeliveryAddress ='', zipCode: initialZipCode=0, deliveryPhone: initialDeliveryPhone='' } = location.state || {};
+
   const [DeliveryId, setDeliveryId] = useState(0);
-  const [deliveryName, setDeliveryName] = useState('');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [zipCode, setZipCode] = useState(0);
-  const [deliveryPhone, setDeliveryPhone] = useState('');
+  const [deliveryName, setDeliveryName] = useState(initialDeliveryName || ''); // Set initial state from passed values
+  const [deliveryAddress, setDeliveryAddress] = useState(initialDeliveryAddress || '');
+  const [zipCode, setZipCode] = useState(initialZipCode || 0);
+  const [deliveryPhone, setDeliveryPhone] = useState(initialDeliveryPhone || '');
   const [userEmail, setUserEmail] = useState('');
   const [errors, setErrors] = useState({});
+  const [deliveries, setDeliveries] = useState([]);
+
+
 
   const navigate = useNavigate();
 
@@ -36,7 +44,7 @@ const EditPlaceOrder = () => {
       const response = await Axios.get('http://localhost:3001/api/deliveries');
       console.log(response.data);
       const users = response.data.response;
-      const user = users.find((u) => u.deliveryEmail === userEmail);
+      const user = users.filter((u) => u.deliveryEmail === userEmail);
       if (user) {
         setDeliveryId(user.deliveryId);
         setDeliveryName(user.deliveryName);
@@ -57,10 +65,10 @@ const EditPlaceOrder = () => {
     if (!nameLetter.test(deliveryName)) {
       errors.deliveryName = "Delivery Name must contain only letters";
     }
-    if (deliveryAddress.length < 5) {
+    if (!deliveryAddress || deliveryAddress.length < 5) {
       errors.deliveryAddress = "Please enter a valid Delivery Address";
     }
-    if (!/^\d{3}$/.test(zipCode)) {
+    if (String(zipCode).length !== 3) {
       errors.zipCode = "Zip Code must contain exactly 3 digits";
     }        
     
@@ -119,7 +127,7 @@ const EditPlaceOrder = () => {
     console.log(payload);
     try {
        await Axios.post('http://localhost:3001/api/update-delivery', payload);
-      console.log('Done');
+       console.log('Update Response:');  // Log the response
       alert('Successfully Updated Delivery Details');
       navigate('/Orders');
     } catch (error) {
@@ -128,11 +136,10 @@ const EditPlaceOrder = () => {
   };
   
   // const handlePayNow = () => {
-  //   navigate(`/payment/${amount}`);
+  //   navigate(/payment/${amount});
   // };
 
-   // Check if there are any errors
-   const isFormInvalid = Object.keys(errors).length > 0;
+  
 
   return (
     <div>
@@ -178,7 +185,7 @@ const EditPlaceOrder = () => {
           
 
         <button type="submit" className="btn btn-primary btn-lg"
-        disabled={isFormInvalid} // Disable button if there are errors
+      
         >Update</button>
        
       </form>
