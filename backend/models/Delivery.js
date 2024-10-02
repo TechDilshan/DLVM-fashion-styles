@@ -10,6 +10,7 @@ const deliverySchema = new Schema({
     deliveryPhone: String,
     deliveryEmail: String,
     amount: Number,
+    dCid: Number
 });
 
 const Delivery = mongoose.model('Delivery',deliverySchema);

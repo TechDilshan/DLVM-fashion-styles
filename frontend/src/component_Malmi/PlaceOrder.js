@@ -16,14 +16,17 @@ const PlaceOrder = () => {
   const [zipCode, setZipCode] = useState(0);
   const [deliveryPhone, setDeliveryPhone] = useState('');
   const [deliveryEmail, setDeliveryEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [errors, setErrors] = useState({});
  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMaxIdAndSetId();
     const email = sessionStorage.getItem('userEmail');
+    const userID = sessionStorage.getItem('userID');
     setDeliveryEmail(email);
-  }, [deliveryEmail]);
+    setUserId(userID)
+  }, [deliveryEmail, userId]);
 
       const validateValues = () => {
         let errors = {};
@@ -99,10 +102,9 @@ const PlaceOrder = () => {
       zipCode: zipCode,
       deliveryPhone: deliveryPhone,
       deliveryEmail: deliveryEmail,
-      amount:amount
+      amount:amount,
+      dCid:userId,
     };
- 
-    
 
   try {
      await Axios.post('http://localhost:3001/api/create-delivery', payload);

@@ -42,9 +42,38 @@ const getSelectedDelivery = (req, res, next) => {
 };
 
 
+const getSelectedCustomer = (req, res, next) => {
+    const { dCid } = req.query;
+
+    if (dCid) {
+        Delivery.findOne({ dCid: dCid })
+            .then(response => {
+                if (response) {
+                    res.json({ response });
+                } else {
+                    res.status(404).json({ message: 'Delivery not found' });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching Delivery data:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
+    } else {
+        Delivery.find()
+            .then(response => {
+                res.json({ response });
+            })
+            .catch(error => {
+                console.error('Error fetching Delivery data:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
+    }
+};
+
+
 //Create new Delivery
 const addDelivery = (req, res, next) => {
-    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail, amount } = req.body;
+    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail, amount, dCid } = req.body;
 
     const delivery = new Delivery({
         deliveryId: deliveryId,
@@ -53,7 +82,8 @@ const addDelivery = (req, res, next) => {
         zipCode: zipCode,
         deliveryPhone: deliveryPhone,
         deliveryEmail: deliveryEmail,
-        amount: amount
+        amount: amount,
+        dCid: dCid
     });
 
     delivery.save()
@@ -68,10 +98,10 @@ const addDelivery = (req, res, next) => {
 
 //Update existing CustoDeliverymer
 const updateDelivery = (req, res, next) => {
-    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail, amount } = req.body;
+    const { deliveryId, deliveryName, deliveryAddress, zipCode, deliveryPhone, deliveryEmail, amount, dCid } = req.body;
     
-    Delivery.updateOne({ deliveryId: deliveryId }, { $set: { deliveryName: deliveryName, deliveryAddress: deliveryAddress, zipCode: zipCode, deliveryPhone: deliveryPhone, deliveryEmail: deliveryEmail, amount:amount} })
-        .then(response => {
+    Delivery.updateOne({ deliveryId: deliveryId }, { $set: { deliveryName: deliveryName, deliveryAddress: deliveryAddress, zipCode: zipCode, deliveryPhone: deliveryPhone, deliveryEmail: deliveryEmail, amount:amount, dCid:dCid} })
+        .then(response => {     
             res.json({ response })
         })
         .catch(error => {
@@ -115,3 +145,4 @@ exports.addDelivery = addDelivery;
 exports.updateDelivery = updateDelivery;
 exports.deleteDelivery = deleteDelivery;
 exports.getDeliveryMaxId = getDeliveryMaxId;
+exports.getSelectedCustomer = getSelectedCustomer;

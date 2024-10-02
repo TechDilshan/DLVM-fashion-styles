@@ -94,11 +94,18 @@ const Orders = () => {
   const fetchOrderDetails = async () => {
     try {
       const response = await Axios.get('http://localhost:3001/api/deliveries');
-      setOrders(response.data.response); // Assuming response.data.response contains the delivery data
+      console.log(response.data); // Check the structure of the API response
+      const userID = sessionStorage.getItem('userID');
+      const userIDInteger = parseInt(userID, 10); 
+      console.log(userID)
+      const filteredOrders = response.data.response.filter(order => order.dCid === userIDInteger);
+      setOrders(filteredOrders);
     } catch (error) {
       console.error('Axios Error: ', error);
     }
   };
+  
+  
 
     const handleUpdate = (amount) => {
     navigate(`/EditPlaceOrder/${amount}`);

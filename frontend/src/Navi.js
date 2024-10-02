@@ -33,7 +33,7 @@ const NaviBar = () => {
         <li><a href="/UserHome_C" className="phone-logo"><img src={logo} alt="Logo"/></a></li>
         <li><a href="/UserHome_C">Home</a></li>
         <li><a href="">About Us</a></li>
-        <li><a href="">My orders</a></li>
+        <li><a href="/Orders">My orders</a></li>
         <li><a href="">Custom Designs</a></li>
 
         {userEmail && (

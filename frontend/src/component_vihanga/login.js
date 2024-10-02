@@ -37,6 +37,7 @@ const Login = () => {
           if (user.password === password) {
             console.log('Login successful!');
 
+            sessionStorage.setItem('userID', user.cusid);
             sessionStorage.setItem('userEmail', email);
             navigate('/UserHome_C');
             
