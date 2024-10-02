@@ -1,39 +1,44 @@
-const Cart = require('../models/Feedback');
+const Feedback = require('../models/Feedback');
 
-const createMessage = (req, res, next) => {  // Function to create a new cart item
-    const { email, name, phoneNumber, note } = req.body; // Extract data from the request body
- 
-    const cart = new Message({ // Create a new cart instance
-        email: email,
-        name: name,
-        phoneNumber:phoneNumber,
-        note: note,
+const createMessage = (req, res, next) => {
+    const { cusid, id, comment } = req.body; 
+
+    console.log("Received data:", req.body); // Log the incoming data
+
+    const cart = new Feedback({ 
+        cusid: cusid,
+        id: id,
+        comment: comment,
     });
 
-    cart.save()  // Save the new cart item to the database
+    cart.save()  
         .then(response => {
             res.json({ response });
         })
         .catch(error => {
-            console.error('Error adding user:', error);
+            console.error('Error adding feedback:', error.message); // Log the error message
             res.status(500).json({ error: 'Internal Server Error' });
         });
 };
 
-const getMessage = (req, res, next) => { // Function to retrieve all cart items
-    Message.find()   // Find all cart items in the database
-        .then(response => {
-            res.json({ response })
-        })
-        .catch(error => {
-            res.json({ error })
-        });
+
+const getMessage = async (req, res, next) => {
+    const { itemId } = req.query; // Extract itemId from query parameters
+
+    try {
+        const feedbacks = await Feedback.find({ id: itemId }); // Find feedbacks related to the itemId
+        res.json({ response: feedbacks }); // Send the feedbacks as a response
+    } catch (error) {
+        console.error('Error retrieving feedbacks:', error.message); // Log the error message
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
+
 const updateMessage = (req, res, next) => { // Function to update a cart item
-    const { email, name, phoneNumber, note } = req.body;
+    const { cusid, itemid, comment} = req.body;
     
-    Message.updateOne({ email: email }, { $set: { name: name, phoneNumber:phoneNumber, note:note} })  // Update the quantity of the specified cart item
+    Feedback.updateOne({ cusid: cusid }, { $set: { comment:comment} })  
         .then(response => {
             res.json({ response })
         })
@@ -44,7 +49,7 @@ const updateMessage = (req, res, next) => { // Function to update a cart item
 
 const deleteMessage = (req, res, next) => { // Function to delete a cart item
     const email = req.body.email;  // Extract the ID of the cart item to be deleted from the request body
-    Message.deleteOne({email: email}) // Delete the specified cart item from the database
+    Feedback.deleteOne({email: email}) // Delete the specified cart item from the database
         .then(response => {
             res.json({ response })
         })

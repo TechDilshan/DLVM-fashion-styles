@@ -10,8 +10,8 @@ import StockUpdate_C from './StockUpdate_C';
 
 import Navi from '../Navi';
 import Foot from '../footer';
-//import createCart from '../createCart';
-//import Feedbackchamu from '../components_chamu/FeedbackDisNew';
+// import createCart from '../createCart';
+import AddFeedback from '../component_Lima/addFeedback.js';
 
 
 const ProductDetails_C = () => {
@@ -96,17 +96,9 @@ const ProductDetails_C = () => {
 </div>
 
 
-
-
-
-
-
-
-
-
-{/* <div>
-  <Feedbackchamu productId={row.id}/>
-</div> */}
+<div>
+  <AddFeedback productId={row.id}/>
+</div>
 
 
 
