@@ -107,8 +107,17 @@ const Orders = () => {
   
   
 
-    const handleUpdate = (amount) => {
-    navigate(`/EditPlaceOrder/${amount}`);
+    const handleUpdate = (amount, deliveryName, deliveryAddress, zipCode, deliveryPhone  ) => {
+    navigate(`/EditPlaceOrder/${amount}`,
+      {
+        state:{
+          deliveryName: deliveryName, 
+          deliveryAddress: deliveryAddress, 
+         zipCode: zipCode, 
+         deliveryPhone: deliveryPhone 
+        }
+      }
+    );
   };
 
 
@@ -189,7 +198,14 @@ const Orders = () => {
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
                 <td>
-                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
+                <button type="button" class="update-order-button" 
+                onClick={() => handleUpdate(
+                  order.amount,
+                  order.deliveryName, 
+                  order.deliveryAddress, 
+                  order.zipCode, 
+                  order.deliveryPhone
+                  )}>Update</button>
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
                  
                   </td>

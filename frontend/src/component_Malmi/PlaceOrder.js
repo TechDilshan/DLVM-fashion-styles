@@ -129,7 +129,7 @@ const PlaceOrder = () => {
   };
 
   // Check if there are any errors
-  const isFormInvalid = Object.keys(errors).length > 0;
+ // const isFormInvalid = Object.keys(errors).length > 0;
 
   return (
          <div className="placeOrder-page">
@@ -153,14 +153,14 @@ const PlaceOrder = () => {
           <div className="mb-3">
              <label htmlFor="zipcode" className="form-label">Enter zipcode </label>
              <input type="Number" value = {zipCode} className="form-control form-control-lg" name="zipcode" 
-              onChange={handleChange}  maxLength={3}  required/>
+              onChange={handleChange}  required/>
                {errors.zipCode && <span className="error">{errors.zipCode}</span>}
 
           </div>
           <div className="mb-3">
              <label htmlFor="phoneNumber" className="form-label">Enter Your Phone Number</label>
              <input type="text" value = {deliveryPhone} className="form-control form-control-lg" name="phoneNumber" 
-             onChange={handleChange}   maxLength={10} required/>
+             onChange={handleChange}   required/>
              {errors.deliveryPhone && <span className="error">{errors.deliveryPhone}</span>}
           </div>
 
@@ -172,7 +172,7 @@ const PlaceOrder = () => {
           
 
         <button type="submit" className="btn btn-primary btn-lg"
-         disabled={isFormInvalid}  // Disable button if there are errors
+         
         >Submit</button>
       </form>
   

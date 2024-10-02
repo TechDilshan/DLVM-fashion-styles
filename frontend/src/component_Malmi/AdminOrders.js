@@ -153,7 +153,7 @@ const AdminOrders = () => {
               <th scope="col">Zip Code</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Total Amount</th>
-              <th scope="col">Order Description</th>
+              
               <th scope="col">Actions</th>
             </tr>
           </thead>
