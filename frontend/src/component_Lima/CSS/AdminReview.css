@@ -1,0 +1,97 @@
+/* AdminFeedbackPage.css */
+
+.admin-dashboard {
+    padding: 20px;
+}
+
+.admin-dashboard h2 {
+    margin-bottom: 10px;
+}
+
+.admin-options button {
+    width: 200px;
+    margin-right: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.admin-options button:hover {
+    background-color: #0056b3;
+}
+
+.admsearch-rating {
+    margin-bottom: 20px;
+}
+
+.admsearch-rating button {
+    background-color: #F6BE00;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.admsearch-rating button:hover {
+    background-color: #DBA800;
+}
+
+.admsearch-input {
+    margin-bottom: 20px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+
+.admtotal-average {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.feedback-heading {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.feedback-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.feedback-table th,
+.feedback-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.feedback-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.feedback-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.feedback-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+/* .feedback-table td button {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .feedback-table td button:hover {
+    background-color: #c82333;
+  } */

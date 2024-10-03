@@ -24,6 +24,7 @@ import TailoringMyOrders from './component_Dila/TailoringMyOrders';
 //Limasha
 import ShoppingCart from './component_Lima/ShoppingCart';
 import AddFeedback from './component_Lima/addFeedback';
+import AdminReview from './component_Lima/AdminReview';
 
 //Vihanga
 import Login from './component_vihanga/login';
@@ -63,6 +64,7 @@ root.render(
 {/* Component Limasha */}
         <Route path='/ShoppingCart' element={<ShoppingCart />} />
         <Route path='/addFeedback' element={<AddFeedback />} />
+        <Route path='/adminReview' element={<AdminReview />} />
 
 {/* Component Vihanga */}
         <Route path='/Login' element={<Login />} />

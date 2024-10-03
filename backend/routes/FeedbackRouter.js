@@ -6,5 +6,7 @@ router_U.post('/createmessage', controller_U.createMessage);
 router_U.get('/getmessage', controller_U.getMessage);
 router_U.post('/updatemessage', controller_U.updateMessage);
 router_U.post('/deletemessage', controller_U.deleteMessage);
+router_U.post('/likefeedback', controller_U.likeFeedback);
+router_U.get('/getallfeedback', controller_U.getAllFeedback);
 
 module.exports = router_U;

@@ -5,6 +5,7 @@ const feedbackSchema = new Schema({
     cusid: Number,
     id: String,
     comment: String,
+    rating: { type: Number, required: true }
 });
 
 const Feedback = mongoose.model('Feedback',feedbackSchema);
