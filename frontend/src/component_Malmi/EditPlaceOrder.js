@@ -9,7 +9,7 @@ import Foot from '../footer'
 
 const EditPlaceOrder = () => {
   
-  const { amount } = useParams(); 
+  const { amount, deliveryId } = useParams(); 
   
   const location = useLocation(); // Get the passed state from the previous page
   
@@ -116,7 +116,7 @@ const EditPlaceOrder = () => {
     // console.log(deliveryPhone)
 
     const payload = {
-      deliveryId: DeliveryId,
+      deliveryId: deliveryId,
       deliveryName: deliveryName,
       deliveryAddress: deliveryAddress,
       zipCode: zipCode,

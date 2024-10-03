@@ -107,10 +107,11 @@ const Orders = () => {
   
   
 
-    const handleUpdate = (amount, deliveryName, deliveryAddress, zipCode, deliveryPhone  ) => {
-    navigate(`/EditPlaceOrder/${amount}`,
+    const handleUpdate = (deliveryId, amount, deliveryName, deliveryAddress, zipCode, deliveryPhone  ) => {
+    navigate(`/EditPlaceOrder/${amount}/${deliveryId}`,
       {
         state:{
+          deliveryId: deliveryId,
           deliveryName: deliveryName, 
           deliveryAddress: deliveryAddress, 
          zipCode: zipCode, 
@@ -200,6 +201,7 @@ const Orders = () => {
                 <td>
                 <button type="button" class="update-order-button" 
                 onClick={() => handleUpdate(
+                  order.deliveryId,
                   order.amount,
                   order.deliveryName, 
                   order.deliveryAddress, 

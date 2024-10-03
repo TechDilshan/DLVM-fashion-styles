@@ -76,7 +76,7 @@ root.render(
 <Route path="/Orders" element={<Orders />} />
 <Route path="/AdminOrders" element={<AdminOrders />} />
 <Route path="/PlaceOrder/:amount" element={<PlaceOrder />} />
-<Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
+<Route path="/EditPlaceOrder/:amount/:deliveryId" element={<EditPlaceOrder />} />
 <Route path="/Recommend" element={<Recommend />} />
 
     </Routes>
