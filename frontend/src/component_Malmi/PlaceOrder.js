@@ -6,7 +6,6 @@ import Navi from '../Navi';
 import Foot from '../footer'
 
 
-
 const PlaceOrder = () => {
   const { amount } = useParams(); 
 
@@ -17,7 +16,6 @@ const PlaceOrder = () => {
   const [deliveryPhone, setDeliveryPhone] = useState('');
   const [deliveryEmail, setDeliveryEmail] = useState('');
   const [userId, setUserId] = useState('');
-  const [errors, setErrors] = useState({});
 
   const [deliveryNameError, setDeliveryNameError] = useState('');
   const [deliveryAddressError, setDeliveryAddressError] = useState('');
@@ -77,8 +75,6 @@ const PlaceOrder = () => {
     }
   };
 
-  // Check if there are any errors
- // const isFormInvalid = Object.keys(errors).length > 0;
 
  const validateForm = () => {
   let isValid = true;
@@ -188,7 +184,7 @@ const handleDeliveryPhoneChange = (e) => {
           </div>
           
 
-        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+        <button type="submit" className="btn btn-primary btn-lg"> Submit </button>
       </form>
   
         </div>
