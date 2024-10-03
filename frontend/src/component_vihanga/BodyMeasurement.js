@@ -2,16 +2,17 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Pose, POSE_CONNECTIONS } from '@mediapipe/pose';
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import { Camera } from '@mediapipe/camera_utils';
-import './CSS/measurement.css';
+import Navi from '../Navi'; // Adjust the import path according to your file structure
+import Foot from '../footer'; // Adjust the import path according to your file structure
+import './CSS/measurement.css'; // Ensure this path is correct
 
 const BodyMeasurement = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const imageRef = useRef(null);
-  const [measurements, setMeasurements] = useState({ shoulders: 0, waist: 0, height: 0 });
+  const [measurements, setMeasurements] = useState({ shoulders: 0, waist: 0, chest: 0, shoulderToWaist: 0, height: 0 });
   const [clothingSize, setClothingSize] = useState('');
   const [cameraActive, setCameraActive] = useState(false);
-  const [imageUploaded, setImageUploaded] = useState(false);
+  const [height, setHeight] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -47,36 +48,18 @@ const BodyMeasurement = () => {
       cameraInstance.start();
     }
 
-    if (imageUploaded) {
-      processImage(pose);
-    }
-
+    // Cleanup on component unmount or when camera state changes
     return () => {
       if (cameraInstance) {
         cameraInstance.stop();
       }
     };
-  }, [cameraActive, imageUploaded]);
-
-  const processImage = async (pose) => {
-    if (imageRef.current && canvasRef.current) {
-      try {
-        await pose.send({ image: imageRef.current });
-      } catch (err) {
-        console.error('Error sending image to pose:', err);
-        setError('Failed to process uploaded image.');
-      }
-    }
-  };
+  }, [cameraActive]);
 
   const onResults = (results) => {
     const canvasElement = canvasRef.current;
-    if (!canvasElement) {
-      setError('Canvas element not found.');
-      return;
-    }
-
     const canvasCtx = canvasElement.getContext('2d');
+
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
@@ -91,23 +74,27 @@ const BodyMeasurement = () => {
       const calculatedMeasurements = calculateMeasurements(results.poseLandmarks);
       setMeasurements(calculatedMeasurements);
 
+      // Suggest clothing size
       suggestClothingSize(calculatedMeasurements);
-
-      sendMeasurements(calculatedMeasurements);
     }
 
     canvasCtx.restore();
   };
 
   const calculateMeasurements = (landmarks) => {
-    const shouldersDistance = calculateDistance(landmarks[11], landmarks[12]);
-    const waistDistance = calculateDistance(landmarks[23], landmarks[24]);
-    const height = calculateDistance(landmarks[0], landmarks[32]);
+    const shouldersDistance = calculateDistance(landmarks[11], landmarks[12]); // Between shoulders
+    const waistDistance = calculateDistance(landmarks[23], landmarks[24]); // Between hips
+    const chestDistance = calculateDistance(landmarks[11], landmarks[23]); // Chest measurement (shoulder to hip)
+    const shoulderToWaistDistance = calculateDistance(landmarks[11], landmarks[23]); // Shoulder to waist measurement
+
+    const heightDistance = parseFloat(height) / 100; // Convert height from cm to meters for calculation
 
     return {
-      shoulders: (shouldersDistance * 100).toFixed(2),
-      waist: (waistDistance * 100).toFixed(2),
-      height: (height * 100).toFixed(2),
+      shoulders: (shouldersDistance * heightDistance).toFixed(2), // Scale by height
+      waist: (waistDistance * heightDistance).toFixed(2), // Scale by height
+      chest: (chestDistance * heightDistance).toFixed(2), // Scale by height
+      shoulderToWaist: (shoulderToWaistDistance * heightDistance).toFixed(2), // Scale by height
+      height: (heightDistance * 100).toFixed(2), // Keep height in cm
     };
   };
 
@@ -118,102 +105,72 @@ const BodyMeasurement = () => {
   };
 
   const suggestClothingSize = (measurements) => {
-    const { shoulders, waist, height } = measurements;
+    const { shoulders, waist, chest, height } = measurements;
 
-    if (height > 180 && shoulders > 45 && waist > 30) {
+    // Example sizing logic (adjust based on your standards)
+    if (height > 180 && shoulders > 45 && waist > 30 && chest > 40) {
       setClothingSize('L');
-    } else if (height > 170 && shoulders > 40 && waist > 28) {
+    } else if (height > 170 && shoulders > 40 && waist > 28 && chest > 38) {
       setClothingSize('M');
     } else {
       setClothingSize('S');
     }
   };
 
-  const sendMeasurements = async (measurements) => {
-    try {
-      const response = await fetch('/api/measurements/addmeasurement', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(measurements),
-      });
-      const result = await response.json();
-      console.log('Measurements saved:', result);
-    } catch (error) {
-      console.error('Error sending measurements:', error);
-      setError('Failed to send measurements to the server.');
-    }
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.src = e.target.result;
-        img.onload = () => {
-          const canvasElement = canvasRef.current;
-
-          // Check if the canvas element is available
-          if (!canvasElement) {
-            setError('Canvas element not found');
-            console.error('Canvas element not found');
-            return;
-          }
-
-          const canvasCtx = canvasElement.getContext('2d');
-          canvasCtx.drawImage(img, 0, 0, canvasElement.width, canvasElement.height);
-          imageRef.current = img;
-          setImageUploaded(true);
-          setCameraActive(false);
-          setError('');
-        };
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const startCamera = () => {
     setCameraActive(true);
-    setImageUploaded(false);
     setError('');
   };
 
   const reset = () => {
     setCameraActive(false);
-    setImageUploaded(false);
-    setMeasurements({ shoulders: 0, waist: 0, height: 0 });
+    setMeasurements({ shoulders: 0, waist: 0, chest: 0, shoulderToWaist: 0, height: 0 });
     setClothingSize('');
+    setHeight('');
     setError('');
   };
 
   return (
-    <div className="container">
-      <h2>Body Measurement</h2>
-      {!cameraActive && !imageUploaded && (
+    <div>
+      <Navi />
+      <div className='shopping-cart'>
+        <h2 className='cart-title'>Body Measurement</h2>
         <div className="actions">
-          <button onClick={startCamera} className="start-button">Start Camera</button>
-          <input type="file" accept="image/*" onChange={handleFileChange} className="upload-button" id="upload-photo" />
-          <label htmlFor="upload-photo" className="upload-label">Upload Photo</label>
+          <input
+            type="number"
+            placeholder="Enter your height (cm)"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            className="height-input"
+            disabled={cameraActive} // Make input read-only when camera is active
+          />
+          <button onClick={startCamera} className="start-button" disabled={cameraActive}>
+            Start Camera
+          </button>
         </div>
-      )}
 
-      {(cameraActive || imageUploaded) && (
-        <div className="measurement-display">
-          {cameraActive && <video ref={videoRef} style={{ display: 'none' }}></video>}
-          <canvas ref={canvasRef} width="640" height="480" className="canvas-view"></canvas>
+        {cameraActive && (
+          <div className="measurement-display">
+            <video ref={videoRef} style={{ display: 'none' }}></video>
+            <canvas ref={canvasRef} width="640" height="480" className="canvas-view"></canvas>
 
-          <div className="measurement-info">
-            <h3>Measurements:</h3>
-            <p>Shoulders: {measurements.shoulders} cm</p>
-            <p>Waist: {measurements.waist} cm</p>
-            <p>Height: {measurements.height} cm</p>
-            <h3>Suggested Clothing Size: {clothingSize}</h3>
-            {error && <p className="error-message">{error}</p>}
-            <button onClick={reset} className="reset-button">Reset</button>
+            <div className="measurement-info">
+              <h3>Measurements:</h3>
+              <p>Shoulders: {measurements.shoulders} cm</p>
+              <p>Waist: {measurements.waist} cm</p>
+              <p>Chest: {measurements.chest} cm</p>
+              <p>Shoulder to Waist: {measurements.shoulderToWaist} cm</p>
+              <p>Height: {measurements.height} cm</p>
+              <h3>Suggested Clothing Size: {clothingSize}</h3>
+              {error && <p className="error-message">{error}</p>}
+              <button onClick={reset} className="reset-button">
+                Reset
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      <Foot />
     </div>
   );
 };

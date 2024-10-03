@@ -18,6 +18,7 @@ import KidsCloths from './component_Dila/KidsCloths';
 import TailoringUI from './component_Dila/TailoringUI';
 import TailoringDisplay from './component_Dila/TailoringDisplay';
 import TailoringMyOrders from './component_Dila/TailoringMyOrders';
+import SkinColor from './component_Dila/skinColor'
 
 
 
@@ -60,6 +61,7 @@ root.render(
         <Route path='/TailoringUI' element={<TailoringUI />} />
         <Route path='/TailoringDisplay' element={<TailoringDisplay />} />
         <Route path='/TailoringMyOrders' element={<TailoringMyOrders />} />
+        <Route path='/skin' element={<SkinColor />} />
 
 {/* Component Limasha */}
         <Route path='/ShoppingCart' element={<ShoppingCart />} />
@@ -77,7 +79,7 @@ root.render(
 <Route path="/Orders" element={<Orders />} />
 <Route path="/AdminOrders" element={<AdminOrders />} />
 <Route path="/PlaceOrder/:amount" element={<PlaceOrder />} />
-<Route path="/EditPlaceOrder/:amount" element={<EditPlaceOrder />} />
+<Route path="/EditPlaceOrder/:amount/:deliveryId" element={<EditPlaceOrder />} />
 <Route path="/Recommend" element={<Recommend />} />
 
     </Routes>

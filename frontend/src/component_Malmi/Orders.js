@@ -107,8 +107,18 @@ const Orders = () => {
   
   
 
-    const handleUpdate = (amount) => {
-    navigate(`/EditPlaceOrder/${amount}`);
+    const handleUpdate = (deliveryId, amount, deliveryName, deliveryAddress, zipCode, deliveryPhone  ) => {
+    navigate(`/EditPlaceOrder/${amount}/${deliveryId}`,
+      {
+        state:{
+          deliveryId: deliveryId,
+          deliveryName: deliveryName, 
+          deliveryAddress: deliveryAddress, 
+         zipCode: zipCode, 
+         deliveryPhone: deliveryPhone 
+        }
+      }
+    );
   };
 
 
@@ -125,7 +135,7 @@ const Orders = () => {
     
      console.log("sucess");
      alert('Order successfully Deleted!');
-     navigate(`/AdminOrders`)
+     navigate(`/Orders`)
     } catch (error) {
       console.error('Axios Error (deleteOrder): ', error);
     }
@@ -189,7 +199,15 @@ const Orders = () => {
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
                 <td>
-                <button type="button" class="update-order-button" onClick={() => handleUpdate(order.amount)}>Update</button>
+                <button type="button" class="update-order-button" 
+                onClick={() => handleUpdate(
+                  order.deliveryId,
+                  order.amount,
+                  order.deliveryName, 
+                  order.deliveryAddress, 
+                  order.zipCode, 
+                  order.deliveryPhone
+                  )}>Update</button>
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
                  
                   </td>

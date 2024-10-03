@@ -16,7 +16,7 @@ const AddFeedback = () => {
     const [rating, setRating] = useState(0);
     const [averageRating, setAverageRating] = useState(0);
     const [successMessage, setSuccessMessage] = useState('');
-    const [editingFeedbackId, setEditingFeedbackId] = useState(null); // Track feedback being edited
+    const [editingFeedbackId, setEditingFeedbackId] = useState(null);
     const userID = sessionStorage.getItem('userID');
     const [likedFeedbacks, setLikedFeedbacks] = useState({});
 
@@ -31,10 +31,11 @@ const AddFeedback = () => {
     const fetchFeedbacks = async () => {
         try {
             const response = await axios.get(`http://localhost:3001/api/getmessage?itemId=${itemId}`);
+            console.log("Fetch Feedbacks Response:", response.data); // Log response data
             if (response.data.success) {
                 setFeedbacks(response.data.feedbacks);
-                const rating = Number(response.data.averageRating); // Ensure it's a number
-                setAverageRating(rating >= 0 ? rating : 0); // Set to 0 if negative
+                const rating = Number(response.data.averageRating);
+                setAverageRating(rating >= 0 ? rating : 0);
             } else {
                 console.error('Failed to fetch feedbacks:', response.data.message);
             }
@@ -53,15 +54,16 @@ const AddFeedback = () => {
         };
 
         try {
-            const response = editingFeedbackId 
-                ? await axios.post('http://localhost:3001/api/updatemessage', { ...feedbackData, feedbackId: editingFeedbackId }) 
+            console.log('Submitting Feedback:', feedbackData); // Log feedback data being sent
+
+            const response = editingFeedbackId
+                ? await axios.post(`http://localhost:3001/api/updatemessage/${editingFeedbackId}`, { ...feedbackData })
                 : await axios.post('http://localhost:3001/api/createmessage', feedbackData);
 
-            if (response.status === 200) {
+            if (response.data.success) {
                 if (editingFeedbackId) {
-                    // Update existing feedback in the state
-                    setFeedbacks((prevFeedbacks) => 
-                        prevFeedbacks.map((feedback) => 
+                    setFeedbacks((prevFeedbacks) =>
+                        prevFeedbacks.map((feedback) =>
                             feedback._id === editingFeedbackId ? { ...feedback, comment, rating } : feedback
                         )
                     );
@@ -75,27 +77,29 @@ const AddFeedback = () => {
                     };
                     setFeedbacks((prevFeedbacks) => [...prevFeedbacks, newFeedback]);
                 }
-                
+
                 resetForm();
                 setSuccessMessage('Feedback submitted successfully!');
                 setTimeout(() => setSuccessMessage(''), 3000);
-                fetchFeedbacks(); 
+                fetchFeedbacks();
+            } else {
+                console.error('Failed to submit feedback:', response.data.message);
             }
         } catch (error) {
-            console.error('Failed to submit feedback:', error);
+            console.error('Error while submitting feedback:', error.response ? error.response.data : error.message);
         }
     };
 
     const resetForm = () => {
         setComment('');
         setRating(0);
-        setEditingFeedbackId(null); // Reset editing feedback ID
+        setEditingFeedbackId(null);
     };
 
     const handleEdit = (feedback) => {
         setComment(feedback.comment);
         setRating(feedback.rating);
-        setEditingFeedbackId(feedback._id); // Set ID of feedback to be edited
+        setEditingFeedbackId(feedback._id);
     };
 
     const handleLike = async (feedbackId) => {
@@ -198,7 +202,7 @@ const AddFeedback = () => {
                             className="revtextarea"
                             placeholder="Write your feedback here..."
                             value={comment}
-                            onChange={(e) => setComment(e.target.value)}
+                            onChange={(e) => setComment(e.target.value)} // Ensure this is correctly set
                             required
                         />
                         <StarRating rating={rating} setRating={setRating} />
@@ -210,4 +214,4 @@ const AddFeedback = () => {
     );
 };
 
-export default AddFeedback;
+export default AddFeedback; 

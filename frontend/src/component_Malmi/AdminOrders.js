@@ -153,7 +153,7 @@ const AdminOrders = () => {
               <th scope="col">Zip Code</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Total Amount</th>
-              <th scope="col">Order Description</th>
+              
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -180,16 +180,7 @@ const AdminOrders = () => {
                 <td>{order.zipCode}</td>
                 <td>{order.deliveryPhone}</td>
                 <td>LKR {order.amount}</td>
-                <td>
-        {/* Display order description */}
-        <ul>
-
-            <li>
-            Product:  {order.name} - {order.quantity} *  {order.price}
-            </li>
-        
-        </ul>
-      </td>
+              
                 <td>
              
                   <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>

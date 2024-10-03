@@ -64,24 +64,33 @@ const getMessage = async (req, res, next) => {
 
 // Update an existing feedback message
 const updateMessage = async (req, res, next) => {
-    const { cusid, feedbackId, rating, comment } = req.body;
+    const { cusid, rating, comment } = req.body;
+    const feedbackId = req.params.id;
 
     try {
-        // Check if the feedback belongs to the user
-        const feedback = await Feedback.findOne({ _id: feedbackId });
+        // Check if the feedback exists
+        const feedback = await Feedback.findById(feedbackId);
         if (!feedback) {
             return res.status(404).json({ success: false, message: 'Feedback not found.' });
         }
-        
-        if (feedback.cusid !== cusid) {
+
+        // Debugging: Log values to compare
+        console.log('Request CusID:', cusid);
+        console.log('Feedback CusID:', feedback.cusid);
+
+        // Check if the feedback belongs to the user
+        if (String(feedback.cusid) !== String(cusid)) {
             return res.status(403).json({ success: false, message: 'You are not authorized to edit this feedback.' });
         }
 
-        const updatedFeedback = await Feedback.findByIdAndUpdate(feedbackId, {
-            rating,
-            comment,
-        }, { new: true });
+        // Update the feedback
+        const updatedFeedback = await Feedback.findByIdAndUpdate(
+            feedbackId,
+            { rating, comment },
+            { new: true, runValidators: true }
+        );
 
+        // Send the updated feedback in the response
         res.json({ success: true, feedback: updatedFeedback });
     } catch (error) {
         console.error('Error updating feedback:', error);
@@ -92,14 +101,21 @@ const updateMessage = async (req, res, next) => {
 
 // Delete a feedback message
 const deleteMessage = (req, res, next) => {
-    Feedback.deleteMany({})  // Delete all feedback items from the database
+    const feedbackId = req.params.id; // Get the feedback ID from the request parameters
+
+    Feedback.findByIdAndDelete(feedbackId)  // Delete the specific feedback item from the database
         .then(response => {
-            res.json({ message: "All feedback deleted successfully.", deletedCount: response.deletedCount });
+            if (response) {
+                res.json({ message: "Feedback deleted successfully.", deletedId: feedbackId });
+            } else {
+                res.status(404).json({ message: "Feedback not found." });
+            }
         })
         .catch(error => {
-            res.json({ error });
+            res.status(500).json({ error: error.message }); // Send error response with status code
         });
 };
+
 
 
 
