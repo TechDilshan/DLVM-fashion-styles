@@ -18,6 +18,7 @@ import KidsCloths from './component_Dila/KidsCloths';
 import TailoringUI from './component_Dila/TailoringUI';
 import TailoringDisplay from './component_Dila/TailoringDisplay';
 import TailoringMyOrders from './component_Dila/TailoringMyOrders';
+import SkinColor from './component_Dila/skinColor'
 
 
 
@@ -59,6 +60,7 @@ root.render(
         <Route path='/TailoringUI' element={<TailoringUI />} />
         <Route path='/TailoringDisplay' element={<TailoringDisplay />} />
         <Route path='/TailoringMyOrders' element={<TailoringMyOrders />} />
+        <Route path='/skin' element={<SkinColor />} />
 
 {/* Component Limasha */}
         <Route path='/ShoppingCart' element={<ShoppingCart />} />
