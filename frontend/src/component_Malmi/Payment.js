@@ -11,10 +11,10 @@ const Payment = () => {
   const { amount } = useParams(); 
 
   const [payid, setPayid] = useState(0);
-  const [cardNumber, setCardNumber] = useState(0);
+  const [cardNumber, setCardNumber] = useState('');
   const [expDate, setExpDate] = useState('');
   const [holderName, setHolderName] = useState('');
-  const [cvv, setCvv] = useState(0);
+  const [cvv, setCvv] = useState('');
 
   const [cardNumberError, setCardNumberError] = useState('');
   const [expDateError, setExpDateError] = useState('');
@@ -25,7 +25,7 @@ const Payment = () => {
 
   useEffect(() => {
     fetchMaxIdAndSetId();
-  });
+  },[]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,6 +87,9 @@ const Payment = () => {
     if (!expDate.trim()) {
       setExpDateError('Expiration Date is required');
       isValid = false;
+    } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expDate.trim())) {
+      setExpDateError('Expiration Date should be in MM/YY format');
+      isValid = false;
     } else {
       setExpDateError('');
     }
@@ -94,7 +97,10 @@ const Payment = () => {
     if (!holderName.trim()) {
       setHolderNameError('Card Holder Name is required');
       isValid = false;
-    } else {
+    } else if (!/^[a-zA-Z\s]+$/.test(holderName.trim())) {
+      setHolderNameError('Card Holder Name should contain only letters');
+      isValid = false;
+    }else {
       setHolderNameError('');
     }
 
@@ -110,6 +116,26 @@ const Payment = () => {
 
     return isValid;
    };
+
+   const handleCardNumberChange = (e) => {
+    setCardNumber(e.target.value);
+    setCardNumberError(''); // Clear error when user starts typing
+  };
+
+  const handleExpDateChange = (e) => {
+    setExpDate(e.target.value);
+    setExpDateError(''); // Clear error when user starts typing
+  };
+
+  const handleHolderNameChange = (e) => {
+    setHolderName(e.target.value);
+    setHolderNameError(''); // Clear error when user starts typing
+  };
+
+  const handleCvvChange = (e) => {
+    setCvv(e.target.value);
+    setCvvError(''); // Clear error when user starts typing
+  };
  
   
   return (
@@ -129,14 +155,14 @@ const Payment = () => {
           <div className="mb-3">
              <label htmlFor="cardNumber" className="form-label">Enter Card Number</label>
              <input type="text" value = {cardNumber} className="form-control form-control-lg" name="cardNumber" 
-              onChange={(e) => setCardNumber(e.target.value)} required/>
+              onChange={handleCardNumberChange} required/>
              {cardNumberError && <div className="error">{cardNumberError}</div>}
           </div>
 
           <div className="mb-3">
              <label htmlFor="expiryDate" className="form-label">Enter Expire Date</label>
              <input type="text" value = {expDate} className="form-control form-control-lg" name="expiryDate" 
-              onChange={(e) => setExpDate(e.target.value)} required/>
+              onChange={handleExpDateChange} required/>
              {expDateError && <div className="error">{expDateError}</div>}
 
           </div>
@@ -144,7 +170,7 @@ const Payment = () => {
           <div className="mb-3">
              <label htmlFor="cardHolderName" className="form-label">Enter Card Holder Name</label>
              <input type="text" value = {holderName} className="form-control form-control-lg" name="cardHolderName" 
-              onChange={(e) => setHolderName(e.target.value)} required/>
+              onChange={handleHolderNameChange} required/>
                {holderNameError && <div className="error">{holderNameError}</div>}
                
           </div>
@@ -152,7 +178,7 @@ const Payment = () => {
           <div className="mb-3">
              <label htmlFor="cvvNumber" className="form-label">Enter CVV</label>
              <input type="text" value = {cvv} className="form-control form-control-lg" name="cvvNumber" 
-              onChange={(e) => setCvv(e.target.value)}  maxLength={3} required/>
+              onChange={handleCvvChange}  required/>
               {cvvError && <div className="error">{cvvError}</div>}
          
           </div>
