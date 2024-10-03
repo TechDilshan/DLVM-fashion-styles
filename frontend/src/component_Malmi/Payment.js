@@ -124,17 +124,17 @@ const Payment = () => {
 
   const handleExpDateChange = (e) => {
     setExpDate(e.target.value);
-    setExpDateError(''); // Clear error when user starts typing
+    setExpDateError(''); 
   };
 
   const handleHolderNameChange = (e) => {
     setHolderName(e.target.value);
-    setHolderNameError(''); // Clear error when user starts typing
+    setHolderNameError(''); 
   };
 
   const handleCvvChange = (e) => {
     setCvv(e.target.value);
-    setCvvError(''); // Clear error when user starts typing
+    setCvvError(''); 
   };
  
   
