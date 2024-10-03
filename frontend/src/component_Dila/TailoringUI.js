@@ -5,11 +5,12 @@ import Navi from '../Navi';
 import Foot from '../footer';
 import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBox, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faUser, faCamera  } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'; 
 import logo from '../image/logo.jpg';
 import { LinearProgress } from "@mui/material";
+import ColorDetectionModal from './colorDetectionModel';
 
 const CustomTailoringForm = () => {
   const [countries, setCountries] = useState([]);
@@ -24,6 +25,10 @@ const CustomTailoringForm = () => {
   const [status, setStatus] = useState('pending');
   const [tid, setTid] = useState(10000);
   const [loading, setLoading] = useState(false);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [detectedColor, setDetectedColor] = useState("");
+  
 
   const navigate = useNavigate();
 
@@ -51,6 +56,11 @@ const CustomTailoringForm = () => {
     e.preventDefault();
     setLoading(true);
     console.log(desiredOutfit,gender,country, negativeOutfit);
+    const colorMessage = ` My Skin Color is ${detectedColor}. I want to make model using this color`;
+
+    const fullOutFit = desiredOutfit + colorMessage;
+
+    console.log('Full message',fullOutFit);
 
     try {
       const formData = new FormData();
@@ -58,7 +68,7 @@ const CustomTailoringForm = () => {
       formData.append('gender', gender);
       formData.append('country', country);
       formData.append('negative', negativeOutfit);
-      formData.append('email', 'pmmufiiokqennikaql@hthlm.com');
+      //formData.append('email', 'pmmufiiokqennikaql@hthlm.com');
       formData.append('password', 'abcdef');
 //gamagemadu001@gmail.com
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
@@ -117,6 +127,22 @@ const CustomTailoringForm = () => {
     navigate('/TailoringMyOrders');
   };
 
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleColorSubmit = (color) => {
+    setDetectedColor(color);
+    closeModal();
+  };
+
+
+
   return (
     <div>
     <div>
@@ -169,7 +195,7 @@ const CustomTailoringForm = () => {
                 </button>
               </div>
             </div>
-        </div>
+          </div>
         <div className="form-container1">
           <h1 className="form-title">Custom Tailoring</h1>
           <form onSubmit={handleSubmit} className="custom-tailoring-form">
@@ -291,6 +317,29 @@ const CustomTailoringForm = () => {
             </div>
             
         </div>
+
+        <div className="my-orders-box">
+            <div className="box-content">
+              <FontAwesomeIcon icon={faCamera} className="user-icon" />
+              <h2 className="box-title">Scan Skin Colour</h2>
+              <p className="box-description">Capture your skin tone for personalized recommendations. Good lighting enhances accuracy!</p>
+              <div className="button-container">
+              <div>
+                  <button className="view-orders-btn" onClick={openModal}>
+                    Scan Body Color
+                  </button>
+                  <ColorDetectionModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    onSubmit={handleColorSubmit}
+                    hexColor={detectedColor}
+                  />
+                  {detectedColor && <p>Submitted Color: {detectedColor}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
     <div>
         <Foot/>

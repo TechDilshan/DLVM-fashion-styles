@@ -2,10 +2,8 @@ import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
 import ColorThief from "colorthief";
 
-const SkinColorDetection = () => {
+const SkinColorDetection = ({ onSubmit }) => {
   const [hexColor, setHexColor] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
-  const [showColorBox, setShowColorBox] = useState(false); // State to control visibility of color box
   const webcamRef = useRef(null);
   const colorThief = new ColorThief();
 
@@ -14,42 +12,23 @@ const SkinColorDetection = () => {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   };
 
-  // Capture image from webcam and crop it to focus on the face
+  // Capture image from webcam and detect skin color
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
-    setImagePreview(imageSrc);
     detectColorFromImage(imageSrc);
   };
 
-  // Handle photo upload and crop the uploaded image
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataURL = reader.result;
-        setImagePreview(dataURL);
-        detectColorFromImage(dataURL);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Detect dominant color from the cropped face area
+  // Detect dominant color from the captured image
   const detectColorFromImage = (imageSrc) => {
     const img = new Image();
     img.src = imageSrc;
     img.crossOrigin = "Anonymous"; // Required for color detection
     img.onload = () => {
-      // Create a canvas to crop the face area
+      // Create a canvas to process the image
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-
-      // Set canvas size to match the image
       canvas.width = img.width;
       canvas.height = img.height;
-
-      // Draw the image on the canvas
       ctx.drawImage(img, 0, 0, img.width, img.height);
 
       // Define the face region - adjust these values based on your specific camera and image size
@@ -79,56 +58,40 @@ const SkinColorDetection = () => {
         const dominantColor = colorThief.getColor(croppedFaceImage);
         const hex = rgbToHex(dominantColor[0], dominantColor[1], dominantColor[2]);
         setHexColor(hex);
+        onSubmit(hex); // Call the submit handler with the detected color
       };
     };
   };
 
-  // Toggle color box visibility when the button is clicked
-  const handleShowColorBox = () => {
-    if (hexColor) {
-      setShowColorBox(true);
-    }
-  };
-
   return (
     <div>
-      <h2>Skin Color Detection</h2>
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-      />
-      <button onClick={capture}>Capture Image</button>
+      <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+      <button 
+        onClick={capture} 
+        style={{
+          backgroundColor: '#4a90e2', // Green background color
+          color: 'white', // White text color
+          border: 'none', // Remove border
+          borderRadius: '5px', // Rounded corners
+          padding: '10px 20px', // Padding for the button
+          cursor: 'pointer', // Change cursor to pointer on hover
+          fontSize: '16px', // Font size
+          transition: 'background-color 0.3s', // Smooth transition for background color
+          margin: '10px'
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#0a3c78')} // Darker green on hover
+        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#4a90e2')} // Reset to original on mouse out
+      >
+        Capture Image
+      </button>
 
-      {/* Display detected skin color */}
-      {hexColor && (
-        <>
-          <p>Detected Skin Color: {hexColor}</p>
-          <button onClick={handleShowColorBox}>Show Skin Color</button>
-        </>
-      )}
-
-      {/* Conditionally render the color box */}
-      {showColorBox && (
-        <div
-          style={{
-            width: "150px",
-            height: "150px",
-            backgroundColor: hexColor,
-            border: "1px solid black",
-            marginTop: "20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "16px",
-            color: "#fff"
-          }}
-        >
-          {hexColor}
-        </div>
-      )}
+      <p>Make sure your face is clearly visible and at an appropriate distance.</p>
     </div>
   );
 };
+
+
+
+
 
 export default SkinColorDetection;
