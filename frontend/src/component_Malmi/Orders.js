@@ -80,8 +80,6 @@ const Orders = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { amount } = useParams(); 
-  
-  
 
   useEffect(() => {
     fetchOrderDetails();
@@ -142,9 +140,6 @@ const Orders = () => {
   };
 
 
- 
-
-
     return (
       <>
       <div>
@@ -186,7 +181,7 @@ const Orders = () => {
                   return (
                     deliveryName.includes(query) || // Search by name
                     deliveryAddress.includes(query) || // Search by Address
-                    deliveryId.includes(query)
+                    deliveryId.includes(query) // Search by ID
                   );
 
                 })
@@ -207,8 +202,8 @@ const Orders = () => {
                   order.deliveryAddress, 
                   order.zipCode, 
                   order.deliveryPhone
-                  )}>Update</button>
-                  <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}>Delete</button>
+                  )}> Update </button>
+                  <button type="button" class="delete-order-button" onClick={() => handleDelete(order.deliveryId)}> Delete </button>
                  
                   </td>
                 </tr>
