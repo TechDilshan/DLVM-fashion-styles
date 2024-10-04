@@ -8,10 +8,10 @@ import Axios from 'axios';
 import { AiOutlinePlus ,AiOutlineSearch } from 'react-icons/ai';
 import '../CSS_C/ProductHomeCSS_C.css';
 import image1 from '../image/banner1.png';
-import image2 from '../image/banner2.jpg';
-import image3 from '../image/banner1.png';
-import image4 from '../image/banner2.jpg';
-import image5 from '../image/banner1.png';
+import image2 from '../image/banner2.png';
+import image3 from '../image/banner3.png';
+import image4 from '../image/banner4.png';
+import image5 from '../image/banner5.png';
 
 
 

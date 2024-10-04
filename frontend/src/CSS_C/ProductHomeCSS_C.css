@@ -135,7 +135,7 @@
 .search-container {
   display: flex;
   margin-left: 100px;
-  margin-top: 20px;
+  margin-top: 2px;
   padding: 0 0.5rem;
   width: 500px;
   margin-right: 100px;
@@ -149,7 +149,7 @@
   width: 100%;
   max-width: 1024px; /* Equivalent to max-w-screen-lg */
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 3px;
   
 }
 
@@ -176,7 +176,7 @@
 
 .cloth-type{
   padding: 10px;
-  margin: 25px 15px 30px 15px;
+  margin: 10px 15px 30px 15px;
   font-size: 15px;
   font-weight: bold;
 }
