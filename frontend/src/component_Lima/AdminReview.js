@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './CSS/AdminReview.css';
 
 const AdminReview = () => {
@@ -36,10 +38,11 @@ const AdminReview = () => {
     const handleDeleteFeedback = async (id) => {
         try {
             await axios.post(`http://localhost:3001/api/deletemessage/${id}`);
-            alert("Review deleted successfully!");
+            toast.success("Review deleted successfully!"); // Toast success message
             fetchFeedbacks(); // Refresh the feedback list
         } catch (error) {
             console.error('Error deleting feedback:', error);
+            toast.error("Failed to delete the review."); // Toast error message
         }
     };
 
@@ -129,8 +132,11 @@ const AdminReview = () => {
                     )}
                 </tbody>
             </table>
+
+            {/* Toast container to display toast messages */}
+            <ToastContainer />
         </div>
     );
 };
 
-export default AdminReview; 
+export default AdminReview;
