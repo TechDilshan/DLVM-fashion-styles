@@ -113,7 +113,7 @@ const ResetPassword = () => {
         </div>
         {errorMessage && <div className="error">{errorMessage}</div>}
         {successMessage && <div className="success">{successMessage}</div>}
-        <button onClick={handleResetPassword} className='Reset-Button'>Reset Password</button>
+        <button onClick={handleResetPassword}>Reset Password</button>
       </div>
     </div>
     <Foot/>

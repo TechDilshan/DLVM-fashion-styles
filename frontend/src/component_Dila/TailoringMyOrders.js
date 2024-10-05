@@ -14,9 +14,9 @@ const TailoringDisplay = () => {
 
   useEffect(() => {
     // Get logged-in email from sessionStorage
-    const email = sessionStorage.getItem('userEmail');
-    setLoggedInEmail(email);
-    // setLoggedInEmail("abc@gmail.com");
+    //const email = sessionStorage.getItem('userEmail');
+    // setLoggedInEmail(email);
+    setLoggedInEmail("abc@gmail.com");
 
     const fetchTailorings = async () => {
       try {
