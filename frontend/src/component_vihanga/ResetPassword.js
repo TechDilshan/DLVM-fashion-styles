@@ -1,9 +1,13 @@
 // src/components/ResetPassword.js
-import React, { useState } from 'react';
-import './CSS/resetPassword.css'; // Ensure to create this CSS file
+import React, { useEffect, useState } from 'react';
+import './CSS/resetPassword.css'; // Ensure you have this CSS file
 import { useNavigate, useLocation } from 'react-router-dom';
+import Axios from 'axios';
+import Navi from '../Navi';
+import Foot from '../footer';
 
 const ResetPassword = () => {
+  const [user, setUser] = useState({});
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -11,22 +15,51 @@ const ResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const userID = sessionStorage.getItem('userID');
 
-  const handleResetPassword = () => {
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = () => {
+    Axios.get(`http://localhost:3001/api/selected-customer?cusid=${userID}`)
+      .then((response) => {
+        setUser(response.data.response); // Set the fetched user data
+        console.log(response.data); // Log the API response
+      })
+      .catch((error) => {
+        console.error('Axios Error: ', error);
+      });
+  };
+
+  const handleResetPassword = async () => {
     if (newPassword !== confirmPassword) {
       setErrorMessage('New password and confirmation do not match.');
       return;
     }
 
-    // Simulate password reset process
-    // In a real implementation, you would call your backend API
-    setSuccessMessage('Password has been reset successfully!');
-    setErrorMessage('');
-
-    // Optionally navigate back to the profile page or another page
-    setTimeout(() => {
-      navigate('/profile'); // Redirecting to profile after a short delay
-    }, 2000);
+    if(user.password == currentPassword){
+      try {
+        const payload = {
+          cusid : userID,
+          password: newPassword
+        }
+  
+        console.log(payload)
+  
+        const response = await Axios.post('http://localhost:3001/api/update-customer', payload);
+        console.log(response);
+        alert('Successfully updated password..')
+        navigate('/profile')
+  
+      } catch (error) {
+        console.log(console.error);
+      }
+    }
+    else{
+      alert('Current password not correct')
+    }
+    
   };
 
   const isActive = (path) => {
@@ -34,6 +67,8 @@ const ResetPassword = () => {
   };
 
   return (
+    <div>
+      <Navi/>
     <div className="reset-password-dashboard">
       <div className="sidebar">
         <div className="profile-overview">
@@ -80,6 +115,8 @@ const ResetPassword = () => {
         {successMessage && <div className="success">{successMessage}</div>}
         <button onClick={handleResetPassword}>Reset Password</button>
       </div>
+    </div>
+    <Foot/>
     </div>
   );
 };

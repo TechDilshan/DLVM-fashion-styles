@@ -244,7 +244,7 @@ const UserHome_C = () => {
       <div class="section-header-trending">
         <div>Trending</div>
         <div class="shop-now-btn">
-        <Link to={`../Recommend.js`}>
+        <Link to={`../Recommend`}>
           <button> Shop Now</button>
         </Link>
         </div>
