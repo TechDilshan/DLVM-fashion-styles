@@ -12,6 +12,10 @@ const Dashboard = () => {
     navigate('/Users');
   }
 
+  const feedbackManagement = () =>{
+    navigate('/adminReview');
+  }
+
   const OrderManagement = () =>{
     navigate('/AdminOrders');
   }
@@ -34,7 +38,7 @@ const Dashboard = () => {
         <button className="box box3">
           <h2 className='box-name'>Profile Management</h2>
         </button>
-        <button className="box box4">
+        <button className="box box4" onClick={() => feedbackManagement()}>
           <h2 className='box-name'>User Feedbacks</h2>
         </button>
       </div>
