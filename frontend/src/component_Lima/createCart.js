@@ -1,42 +1,34 @@
-import React, { useState } from 'react';
-import createCart from './createCart'; // Import your createCart function
+import { useEffect, useState } from 'react';
+import Axios from 'axios';
 
-const ProductPage = () => {
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [quantity, setQuantity] = useState(1);
-    const [stock, setStock] = useState(10); // Example stock count (this should come from your backend)
+const createCart = ({ productId, qty, stk}) => { // Function to create a new cart item
+    // Retrieve the email session from sessionStorage
+    const userEmail = sessionStorage.getItem('userEmail');
+
+    if(stk>=qty){ // Check if there is enough stock to add the specified quantity
+        const payload = {
+            id: productId,
+            quantity: qty,
+            email: userEmail, // Include the userEmail in the payload
+        };
     
-    // Assuming the product data is fetched and set
-    const handleAddToCart = () => {
-        if (selectedProduct) {
-            createCart({ 
-                productId: selectedProduct.id, 
-                qty: quantity, 
-                stk: stock 
+         // Log information for debugging purposes
+        console.log('p ID', productId);
+        console.log('q', qty);
+        console.log('e', userEmail);
+    
+        Axios.post('http://localhost:3001/api/createcart', payload) // Send a POST request to the server to create a new cart item
+            .then((response) => {
+                // Handle response if needed
+            })
+            .catch((error) => {
+                console.error('Axios Error: ', error);
             });
-        }
-    };
-
-    return (
-        <div>
-            <h1>{selectedProduct ? selectedProduct.name : "Product Name"}</h1>
-            <p>Available Stock: {stock}</p>
-
-            <label htmlFor="quantity">Quantity:</label>
-            <input 
-                type="number" 
-                id="quantity" 
-                value={quantity} 
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                min="1"
-                max={stock}
-            />
-
-            <button onClick={handleAddToCart}>
-                Add to Cart
-            </button>
-        </div>
-    );
+    }
+    else{
+        alert("Stock Exceeded. Cannot add to cart!.."); // Alert the user if the stock is insufficient to add to the cart
+    }
+    
 };
 
-export default ProductPage;
+export default createCart;
