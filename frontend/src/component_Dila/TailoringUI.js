@@ -28,11 +28,12 @@ const CustomTailoringForm = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [detectedColor, setDetectedColor] = useState("");
-  
+  const Useremail = sessionStorage.getItem('userEmail');
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setEmail(Useremail);
     const fetchCountries = async () => {
       try {
         const response = await axios.get('https://restcountries.com/v3.1/all');
@@ -68,7 +69,7 @@ const CustomTailoringForm = () => {
       formData.append('gender', gender);
       formData.append('country', country);
       formData.append('negative', negativeOutfit);
-      //formData.append('email', 'pmmufiiokqennikaql@hthlm.com');
+      formData.append('email', 'tayeh55443@paxnw.com');
       formData.append('password', 'abcdef');
 //gamagemadu001@gmail.com
       const response = await axios.post('https://thenewblack.ai/api/1.1/wf/clothing', formData);
@@ -114,6 +115,7 @@ const CustomTailoringForm = () => {
       price: price,
       status: status,
     };
+    console.log(payload)
     Axios.post('http://localhost:3001/api/createtailoring', payload)
       .then((response) => {
         console.log('Done');
