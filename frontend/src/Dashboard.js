@@ -20,6 +20,10 @@ const Dashboard = () => {
     navigate('/AdminOrders');
   }
 
+  const ProfileManagement = () =>{
+    navigate('/AllProfiles');
+  }
+
   const logoutBtb = () =>{
     navigate('/login');
   }
@@ -35,7 +39,7 @@ const Dashboard = () => {
         </button>
       </div>
       <div className="box-row">
-        <button className="box box3">
+        <button className="box box3" onClick={() => ProfileManagement()}>
           <h2 className='box-name'>Profile Management</h2>
         </button>
         <button className="box box4" onClick={() => feedbackManagement()}>
