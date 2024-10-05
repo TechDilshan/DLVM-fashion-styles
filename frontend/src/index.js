@@ -32,6 +32,8 @@ import Login from './component_vihanga/login';
 import SignUp from './component_vihanga/signUp'
 import ForgotPassword from './component_vihanga/forgotPassword'
 import BodyMeasurement from './component_vihanga/BodyMeasurement'
+import UserProfile from './component_vihanga/UserProfile';
+import ResetPassword from './component_vihanga/ResetPassword';
 
 //Malmi
 import Payment from './component_Malmi/Payment';
@@ -73,6 +75,9 @@ root.render(
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/forgotPassword' element={<ForgotPassword />} />
         <Route path='/bodymeasurement' element={<BodyMeasurement />} />
+        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+
 
 {/* Component Malmi */}
 <Route path="/Payment/:amount" element={<Payment />} />
