@@ -127,7 +127,7 @@ const ProductItem_C = ({ rows }) => {
                  {/*Display Product stock or out of stock message */}
                 <div className="stock-info">
                   <div className="stock-indicator"></div>
-                  <div className={`stock-text ${row.stock === 0 ? 'text-red-500' : ''}`}  style={{ fontSize: '13px' }}>
+                  <div className={`stock-text-stock ${row.stock === 0 ? 'text-red-500' : ''}`}  style={{ fontSize: '13px' }}>
                     {row.stock === 0 ? 'Out of stock' : `${row.stock} pcs. in stock`}
                   </div>
 
