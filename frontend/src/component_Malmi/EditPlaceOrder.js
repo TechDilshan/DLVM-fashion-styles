@@ -18,7 +18,7 @@ const EditPlaceOrder = () => {
   const [DeliveryId, setDeliveryId] = useState(0);
   const [deliveryName, setDeliveryName] = useState(initialDeliveryName || ''); // Set initial state from passed values
   const [deliveryAddress, setDeliveryAddress] = useState(initialDeliveryAddress || '');
-  const [zipCode, setZipCode] = useState(initialZipCode || 0);
+  const [zipCode, setZipCode] = useState(initialZipCode || '');
   const [deliveryPhone, setDeliveryPhone] = useState(initialDeliveryPhone || '');
   const [userEmail, setUserEmail] = useState('');
   
@@ -96,48 +96,59 @@ const EditPlaceOrder = () => {
   const validateForm = () => {
     let isValid = true;
   
-    if (!deliveryName.trim()) {
+    // Safeguard against undefined values with optional chaining (?.) or default values
+    const deliveryNameTrimmed = deliveryName?.trim() || '';
+    const deliveryAddressTrimmed = deliveryAddress?.trim() || '';
+    const zipCodeTrimmed = zipCode?.toString().trim() || '';
+    const deliveryPhoneTrimmed = deliveryPhone?.trim() || '';
+  
+    // Validate delivery name
+    if (!deliveryNameTrimmed) {
       setDeliveryNameError('Name is required');
       isValid = false;
-    } else if (!/^[a-zA-Z\s]+$/.test(deliveryName.trim())) {
+    } else if (!/^[a-zA-Z\s]+$/.test(deliveryNameTrimmed)) {
       setDeliveryNameError('Delivery Name must contain only letters');
       isValid = false;
     } else {
       setDeliveryNameError('');
     }
   
-    if (!deliveryAddress.trim()) {
+    // Validate delivery address
+    if (!deliveryAddressTrimmed) {
       setDeliveryAddressError('Delivery Address is required');
       isValid = false;
-    } else if (deliveryAddress.length < 5) {
+    } else if (deliveryAddressTrimmed.length < 5) {
       setDeliveryAddressError('Please enter a valid Delivery Address');
       isValid = false;
     } else {
       setDeliveryAddressError('');
     }
   
-    if (!zipCode.trim()) {
+    // Validate zip code
+    if (!zipCodeTrimmed) {
       setZipCodeError('Zip Code is required');
       isValid = false;
-    } else if (!/^\d{5}$/.test(zipCode.trim())) {
+    } else if (!/^\d{5}$/.test(zipCodeTrimmed)) {
       setZipCodeError('Zip Code should be 5 digits');
       isValid = false;
     } else {
       setZipCodeError('');
     }
   
-    if (!deliveryPhone.trim()) {
+    // Validate delivery phone
+    if (!deliveryPhoneTrimmed) {
       setDeliveryPhoneError('Phone Number is required');
       isValid = false;
-    } else if (!/^[0]\d{9}$/.test(deliveryPhone.trim())) {
-      setDeliveryPhoneError('Phone Number should be 10 digits and starts with 0');
+    } else if (!/^[0]\d{9}$/.test(deliveryPhoneTrimmed)) {
+      setDeliveryPhoneError('Phone Number should be 10 digits and start with 0');
       isValid = false;
-    }else {
+    } else {
       setDeliveryPhoneError('');
     }
   
     return isValid;
-   };
+  };
+  
   
    const handleDeliveryNameChange = (e) => {
     setDeliveryName(e.target.value);
