@@ -13,26 +13,27 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [cusid, setCusid] = useState(0);
 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchMaxIdAndSetId();
-  });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add user registration logic here
-    //console.log({ firstName, lastName, email, address, phone, password });
-
-    const payload = {
+    
+    if (validateForm()) {
+      const payload = {
         cusid: cusid,
         firstName: firstName,
         lastName: lastName,
         cusEmail: email,
         cusAddress: address,
-        cusNumber:  phone,
+        cusNumber: phone,
         password: password,
       };
+
       Axios.post('http://localhost:3001/api/create-customer', payload)
         .then((response) => {
           console.log('Done');
@@ -42,15 +43,61 @@ const Register = () => {
         .catch((error) => {
           console.error('Axios Error: ', error);
         });
-    
-        
+    }
+  };
+
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+
+    if (!firstName) {
+      formErrors.firstName = "First Name is required.";
+      isValid = false;
+    }
+
+    if (!lastName) {
+      formErrors.lastName = "Last Name is required.";
+      isValid = false;
+    }
+
+    if (!email) {
+      formErrors.email = "Email is required.";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      formErrors.email = "Email address is invalid.";
+      isValid = false;
+    }
+
+    if (!address) {
+      formErrors.address = "Address is required.";
+      isValid = false;
+    }
+
+    if (!phone) {
+      formErrors.phone = "Phone number is required.";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      formErrors.phone = "Phone number must be exactly 10 digits.";
+      isValid = false;
+    }
+
+    if (!password) {
+      formErrors.password = "Password is required.";
+      isValid = false;
+    } else if (password.length < 6) {
+      formErrors.password = "Password must be at least 6 characters long.";
+      isValid = false;
+    }
+
+    setErrors(formErrors);
+    return isValid;
   };
 
   const fetchMaxIdAndSetId = async () => {
     try {
       const response = await Axios.get('http://localhost:3001/api/getcus-maxid');
-      const maxId = response.data?.maxId || 0; 
-      setCusid(maxId+1);
+      const maxId = response.data?.maxId || 0;
+      setCusid(maxId + 1);
     } catch (error) {
       console.error('Axios Error (getMaxId): ', error);
     }
@@ -71,6 +118,7 @@ const Register = () => {
               placeholder="Enter your first name"
               required
             />
+            {errors.firstName && <span className="error-text">{errors.firstName}</span>}
           </div>
 
           <div className="input-group-register">
@@ -82,6 +130,7 @@ const Register = () => {
               placeholder="Enter your last name"
               required
             />
+            {errors.lastName && <span className="error-text">{errors.lastName}</span>}
           </div>
 
           <div className="input-group-register">
@@ -93,6 +142,7 @@ const Register = () => {
               placeholder="you@example.com"
               required
             />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
           <div className="input-group-register">
@@ -104,6 +154,7 @@ const Register = () => {
               placeholder="Enter your address"
               required
             />
+            {errors.address && <span className="error-text">{errors.address}</span>}
           </div>
 
           <div className="input-group-register">
@@ -115,6 +166,7 @@ const Register = () => {
               placeholder="Enter your phone number"
               required
             />
+            {errors.phone && <span className="error-text">{errors.phone}</span>}
           </div>
 
           <div className="input-group-register">
@@ -126,6 +178,7 @@ const Register = () => {
               placeholder="Enter a password"
               required
             />
+            {errors.password && <span className="error-text">{errors.password}</span>}
           </div>
 
           <button className="signup-btn" type="submit">Sign Up</button>
