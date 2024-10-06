@@ -4,7 +4,8 @@ import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import { Camera } from '@mediapipe/camera_utils';
 import Navi from '../Navi'; // Adjust the import path according to your file structure
 import Foot from '../footer'; // Adjust the import path according to your file structure
-import './CSS/measurement.css'; // Ensure this path is correct
+import './CSS/measurement.css'; 
+import sizeImage from '../image/sizes.png';
 
 const BodyMeasurement = () => {
   const videoRef = useRef(null);
@@ -48,13 +49,21 @@ const BodyMeasurement = () => {
       cameraInstance.start();
     }
 
-    // Cleanup on component unmount or when camera state changes
     return () => {
       if (cameraInstance) {
         cameraInstance.stop();
       }
     };
   }, [cameraActive]);
+
+  const startCamera = () => {
+    if (!height || height.trim() === '') {
+      setError('Please enter your height for more accurate result.');
+      return;
+    }
+    setCameraActive(true);
+    setError(''); // Clear any previous errors
+  };
 
   const onResults = (results) => {
     const canvasElement = canvasRef.current;
@@ -90,10 +99,10 @@ const BodyMeasurement = () => {
     const heightDistance = parseFloat(height) / 100; // Convert height from cm to meters for calculation
 
     return {
-      shoulders: (shouldersDistance * heightDistance).toFixed(2), // Scale by height
-      waist: (waistDistance * heightDistance).toFixed(2), // Scale by height
-      chest: (chestDistance * heightDistance).toFixed(2), // Scale by height
-      shoulderToWaist: (shoulderToWaistDistance * heightDistance).toFixed(2), // Scale by height
+      shoulders: (shouldersDistance * heightDistance * 100).toFixed(2), // Scale by height
+      waist: (waistDistance * heightDistance * 100 * 3).toFixed(2), // Scale by height
+      chest: (chestDistance * heightDistance * 100).toFixed(2), // Scale by height
+      shoulderToWaist: ((shoulderToWaistDistance * heightDistance * 100)/2).toFixed(2), // Scale by height
       height: (heightDistance * 100).toFixed(2), // Keep height in cm
     };
   };
@@ -107,19 +116,25 @@ const BodyMeasurement = () => {
   const suggestClothingSize = (measurements) => {
     const { shoulders, waist, chest, height } = measurements;
 
-    // Example sizing logic (adjust based on your standards)
-    if (height > 180 && shoulders > 45 && waist > 30 && chest > 40) {
+    if (chest > 117) {
+      setClothingSize('3XL');
+    } else if (chest > 112) {
+      setClothingSize('2XL');
+    } else if (chest > 107) {
+      setClothingSize('XL');
+    } else if (chest > 102) {
       setClothingSize('L');
-    } else if (height > 170 && shoulders > 40 && waist > 28 && chest > 38) {
+    } else if (chest > 97) {
       setClothingSize('M');
-    } else {
+    } else if (chest > 92) {
       setClothingSize('S');
+    } else if (chest > 89) {
+      setClothingSize('XS');
+    } else if (chest > 81) {
+      setClothingSize('S2(2XS)');
+    } else {
+      setClothingSize('S4(3XS)');
     }
-  };
-
-  const startCamera = () => {
-    setCameraActive(true);
-    setError('');
   };
 
   const reset = () => {
@@ -133,40 +148,61 @@ const BodyMeasurement = () => {
   return (
     <div>
       <Navi />
-      <div className='shopping-cart'>
-        <h2 className='cart-title'>Body Measurement</h2>
+      <div className="shopping-cart">
+        <h2 className="cart-title">Body Measurement</h2>
         <div className="actions">
-          <input
-            type="number"
-            placeholder="Enter your height (cm)"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="height-input"
-            disabled={cameraActive} // Make input read-only when camera is active
-          />
-          <button onClick={startCamera} className="start-button" disabled={cameraActive}>
-            Start Camera
-          </button>
+          <p>Discover your perfect fit using your webcam in seconds</p>
+          {!cameraActive && (
+            <>
+              <input
+                type="number"
+                placeholder="Enter your height (cm)"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                className="height-input"
+                disabled={cameraActive}
+              />
+              <button onClick={startCamera} className="start-button" disabled={cameraActive}>
+                Start Camera
+              </button>
+            </>
+          )}
         </div>
+        {error && <p className="error-message">{error}</p>}
 
         {cameraActive && (
-          <div className="measurement-display">
-            <video ref={videoRef} style={{ display: 'none' }}></video>
-            <canvas ref={canvasRef} width="640" height="480" className="canvas-view"></canvas>
-
-            <div className="measurement-info">
-              <h3>Measurements:</h3>
-              <p>Shoulders: {measurements.shoulders} cm</p>
-              <p>Waist: {measurements.waist} cm</p>
-              <p>Chest: {measurements.chest} cm</p>
-              <p>Shoulder to Waist: {measurements.shoulderToWaist} cm</p>
-              <p>Height: {measurements.height} cm</p>
-              <h3>Suggested Clothing Size: {clothingSize}</h3>
-              {error && <p className="error-message">{error}</p>}
-              <button onClick={reset} className="reset-button">
-                Reset
-              </button>
+          <div className="camera-section">
+            <div className="video-canvas-container">
+              <video ref={videoRef} style={{ display: 'none' }}></video>
+              <canvas ref={canvasRef} width="640" height="480" className="canvas-view"></canvas>
             </div>
+            
+            {/* Notice and Image Section */}
+            <div className="notice-section">
+              <div className="notice-text">
+                <h6>Notice:</h6>
+                <li>Ensure you're standing straight.</li>
+                <li>Stand few feet away from your webcam. Upeer part of the body should visible to camera.</li>
+                <li>Wear tight-fitting clothes for better accuracy.</li>
+              </div>
+              <h6>Size chart</h6>
+              <img src={sizeImage} alt="Size Image" className="notice-image" />
+            </div>
+          </div>
+        )}
+
+        {cameraActive && (
+          <div className="measurement-info">
+            <h3>Measurements:</h3>
+            <p>Shoulders: {measurements.shoulders} cm</p>
+            <p>Waist: {measurements.waist} cm</p>
+            <p>Chest: {measurements.chest} cm</p>
+            <p>Shoulder to Waist: {measurements.shoulderToWaist} cm</p>
+            <p>Height: {measurements.height} cm</p>
+            <h3>Suggested Clothing Size: {clothingSize}</h3>
+            <button onClick={reset} className="reset-button">
+              Reset
+            </button>
           </div>
         )}
       </div>

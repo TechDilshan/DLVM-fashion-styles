@@ -134,7 +134,7 @@ const AdminOrders = () => {
       <div>
         <Navi />
       </div>
-        <div className='header' >Active Customer List</div>
+        <div className='header' >Active User List</div>
         {/* Search by name..."  */}
         <div>
         <input type="search" placeholder="Search by ID, Name or Address" aria-label="Search"
@@ -143,8 +143,8 @@ const AdminOrders = () => {
 
         </div>
         <button type='button' className="pdfButton">
-          <PDFDownloadLink document={<GenerateReceipt orders={orders} />} fileName="All Customer List.pdf">
-            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download Bill')}
+          <PDFDownloadLink document={<GenerateReceipt orders={orders} />} fileName="All User List.pdf">
+            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download Report')}
           </PDFDownloadLink>
         </button>
         <table className="ordersTable">

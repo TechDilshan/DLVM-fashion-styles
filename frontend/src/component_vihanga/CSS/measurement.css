@@ -1,7 +1,6 @@
 /* BodyMeasurement.css */
-
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
   font-family: Arial, sans-serif;
@@ -10,6 +9,12 @@
 
 h2 {
   color: #333;
+}
+
+h6 {
+  font-size:x-large;
+  text-align: center;
+  color: rgb(225, 62, 47);
 }
 
 .actions {
@@ -23,68 +28,68 @@ h2 {
 .start-button,
 .reset-button {
   padding: 10px 20px;
-  font-size: 18px;
-  background-color: #4caf50;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.start-button:hover,
-.reset-button:hover {
-  background-color: #45a049;
+.start-button:disabled {
+  background-color: #999;
 }
 
-.upload-button {
-  display: none;
-}
-
-.upload-label {
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.upload-label:hover {
-  background-color: #1976d2;
-}
-
-.measurement-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.canvas-view {
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.measurement-info {
-  text-align: left;
-  width: 100%;
-  max-width: 400px;
-}
-
-.measurement-info h3 {
-  color: #333;
-}
-
-.measurement-info p {
-  font-size: 16px;
-  color: #555;
-  margin: 5px 0;
+.height-input {
+  padding: 10px;
+  width: 200px;
 }
 
 .error-message {
   color: red;
-  font-weight: bold;
+}
+
+.camera-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.video-canvas-container {
+  position: relative;
+}
+
+canvas.canvas-view {
+  border: 2px solid black;
+}
+
+/* Notice Section */
+.notice-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notice-text {
+  text-align: left;
+  padding: 10px;
+  color: #333;
+}
+
+.notice-image {
+  width: 200px;
+  height: auto;
   margin-top: 10px;
+}
+
+.measurement-info {
+  margin-top: 20px;
+}
+
+.reset-button {
+  background-color: #f44336;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
 }
