@@ -51,7 +51,7 @@ root.render(
     <Routes>
         
 {/* Component Dilashan */}
-        <Route path='/' element={<App />} />
+        <Route path='/' element={<UserHome />} />
         <Route path='/Dashboard' element={<Dashboard />} />
 
         <Route path='/users' element={<Users />} />
